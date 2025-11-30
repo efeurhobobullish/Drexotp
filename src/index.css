@@ -1,48 +1,33 @@
-/* ========================================= */
-/*  Font Import (Optimized)                  */
-/* ========================================= */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Raleway:ital,wght@0,100..900;1,100..900&family=Space+Grotesk:wght@300..700&display=swap');
+
 @import "tailwindcss";
+
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ========================================= */
-/*  ROOT COLOR SYSTEM                        */
-/* ========================================= */
-
 :root {
-  /* Light mode colors */
-  --background: #ffffff;
-  --foreground: #f5f5f5;
-  --secondary: #f9f9f9;
-
-  --main: #333333;
-  --main-rgb: 51, 51, 51; /* RGB for transparency */
-
-  --primary: #1f1f1f;
-  --muted: #8c8c8c;
-  --line: #e6e6e6;
+  --background: #fafafa;
+  --secondary: #f4f4f5;
+  --foreground: #e4e4e7;
+  --main: #18181b;
+  --muted: #71717a;
+  --primary: #09090b;
+  --line: #e4e4e7;
 }
 
 .dark {
-  /* Dark mode colors */
-  --background: #0b0b0b;
-  --foreground: #212121;
-  --secondary: #121212;
-
-  --main: #fefefe;
-  --main-rgb: 254, 254, 254;
-
-  --primary: #fefefe;
-  --muted: #a1a1a1;
-  --line: #1e1e1e;
+  --background: #121212;
+  --foreground: #1f1f1f;
+  --main: #e4e4e7;
+  --secondary: #1a1a1a;
+  --muted: #a1a1aa;
+  --line: #27272a;
+  --primary: #fafafa;
 }
-
-/* ========================================= */
-/*  TAILWIND THEME BIND                      */
-/* ========================================= */
 
 @theme inline {
   --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-raleway: "Raleway", sans-serif;
+  --font-space: "Space Grotesk", sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-secondary: var(--secondary);
@@ -52,21 +37,13 @@
   --color-primary: var(--primary);
 }
 
-/* ========================================= */
-/*  GLOBAL STYLING                           */
-/* ========================================= */
-
-* {
-  @apply outline-none;
+*{
+  @apply outline-none
 }
 
 body {
-  @apply bg-background text-main font-sans antialiased;
+ @apply bg-background text-main font-sans;
 }
-
-/* ========================================= */
-/*  LAYOUT CONTAINERS                        */
-/* ========================================= */
 
 .main {
   @apply max-w-[90%] 2xl:max-w-[1280px] mx-auto;
@@ -80,28 +57,19 @@ body {
   @apply flex items-center justify-center;
 }
 
-/* ========================================= */
-/*  BUTTON STYLES                            */
-/* ========================================= */
-
 button,
 .btn {
-  @apply cursor-pointer flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply cursor-pointer font-space flex items-center justify-center gap-2 disabled:opacity-50;
 }
 
 .btn-primary {
-  @apply bg-primary text-white dark:text-[#171717] font-semibold px-4 py-2 rounded-md hover:opacity-90 active:opacity-80;
+  @apply text-white dark:text-[#171717] bg-primary font-semibold;
 }
-
-/* ========================================= */
-/*  SCROLLBAR HIDING                         */
-/* ========================================= */
 
 .hide-scrollbar::-webkit-scrollbar {
-  display: none;
+  @apply hidden;
 }
 
-.hide-scrollbar {
-  -ms-overflow-style: none; /* IE */
-  scrollbar-width: none; /* Firefox */
+.hide-scrollbar::-webkit-scrollbar-thumb {
+  @apply hidden;
 }
