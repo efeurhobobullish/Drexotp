@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Phone, CreditCard, Plus, Activity, Shield, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { MainLayout } from "@/layouts";
 
 export default function Dashboard() {
   // Mock user data in Naira
