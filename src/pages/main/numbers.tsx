@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Search, Globe, Zap } from "lucide-react";
 import { useState } from "react";
-import { MainLayout } from "@/layouts/main-layout";
+import { MainLayout } from "@/layouts";
 import { Link } from "react-router-dom";
 
 export default function Numbers() {
