@@ -1,6 +1,5 @@
 import ModeToggle from "@/components/ui/mode-toggle";
 import { Pattern } from "@/components/ui";
-import { libraries } from "@/constants/data";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -8,10 +7,9 @@ export default function Home() {
   return (
     <Pattern>
       <div className="h-[100dvh] relative z-10 center flex-col gap-10 text-center layout">
-        
-        {/* Status Badge */}
+
+        {/* System Status */}
         <motion.div
-          className="center"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
@@ -25,7 +23,7 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Title & description */}
+        {/* Title and description */}
         <motion.div
           className="space-y-2"
           initial={{ opacity: 0, y: 10 }}
@@ -37,14 +35,15 @@ export default function Home() {
           </h1>
 
           <p className="text-muted text-xs">
-            Verified using <span className="font-bold text-yellow-500">AES-256</span> encryption.
+            Protected using <span className="font-bold text-yellow-500">AES-256</span> encryption.
           </p>
+
           <p className="text-muted text-sm">
-            Instant OTP virtual numbers. No reuse. No complications.
+            Instant virtual numbers for OTP verification. Fast, secure and one-time use.
           </p>
         </motion.div>
 
-        {/* CTA Buttons */}
+        {/* CTA Button */}
         <motion.div
           className="flex gap-4 text-sm md:flex-row flex-col"
           initial={{ opacity: 0, y: 20 }}
@@ -58,22 +57,15 @@ export default function Home() {
           </Link>
         </motion.div>
 
-        {/* Libraries / tools used */}
-        <motion.ul
-          className="center flex-wrap gap-2"
+        {/* Subtle footer (optional) */}
+        <motion.p
+          className="text-xs text-muted mt-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.6 }}
         >
-          {libraries.map((library) => (
-            <li
-              key={library}
-              className="text-xs text-muted bg-secondary border border-line rounded-full px-4 py-2"
-            >
-              {library}
-            </li>
-          ))}
-        </motion.ul>
+          Trusted by users worldwide.
+        </motion.p>
 
         {/* Mode Toggle */}
         <motion.div
