@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
-import { Phone, CreditCard, Plus, Activity, Shield } from "lucide-react";
+import { Phone, CreditCard, Plus, Activity, Shield, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Dashboard() {
-  // Mock user data
+  // Mock user data in Naira
   const userData = {
-    balance: 125.50,
+    balance: 125500, // ₦125,500
     totalNumbers: 8,
     activeNumbers: 6,
     numbersUsed: 247
@@ -15,7 +15,7 @@ export default function Dashboard() {
     {
       icon: CreditCard,
       label: "Account Balance",
-      value: `$${userData.balance}`,
+      value: `₦${userData.balance.toLocaleString()}`,
       color: "green",
       description: "Available funds"
     },
@@ -36,7 +36,7 @@ export default function Dashboard() {
     {
       icon: Shield,
       label: "Numbers Used",
-      value: userData.numbersUsed,
+      value: userData.numbersUsed.toLocaleString(),
       color: "purple",
       description: "Total OTPs generated"
     }
@@ -45,24 +45,24 @@ export default function Dashboard() {
   const recentPurchases = [
     { 
       id: 1, 
-      number: "+1 (555) 123-4567", 
-      price: 15.99, 
+      number: "+234 901 234 5678", 
+      price: 24500, // ₦24,500
       date: "2024-01-15", 
       status: "active",
       usage: "12 OTPs"
     },
     { 
       id: 2, 
-      number: "+1 (555) 987-6543", 
-      price: 15.99, 
+      number: "+234 902 345 6789", 
+      price: 24500, 
       date: "2024-01-10", 
       status: "active",
       usage: "8 OTPs"
     },
     { 
       id: 3, 
-      number: "+1 (555) 456-7890", 
-      price: 12.99, 
+      number: "+234 903 456 7890", 
+      price: 19900, 
       date: "2024-01-05", 
       status: "expired",
       usage: "23 OTPs"
@@ -88,7 +88,7 @@ export default function Dashboard() {
         transition={{ duration: 0.4 }}
       >
         <h1 className="text-2xl font-bold font-space mb-2">
-          Dashboard Overview
+          Welcome back, <span className="text-main">John</span> 👋
         </h1>
         <p className="text-muted">Manage your virtual numbers and monitor usage</p>
       </motion.section>
@@ -126,26 +126,29 @@ export default function Dashboard() {
       </motion.section>
 
       {/* Quick Actions & Recent Purchases Side by Side */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Purchase Number Card */}
         <motion.section
-          className="bg-gradient-to-br from-main to-main/80 rounded-xl p-6 text-white"
+          className="bg-gradient-to-br from-main to-main/80 rounded-xl p-5 text-white"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3, duration: 0.4 }}
         >
           <div className="space-y-4">
             <div className="space-y-2">
-              <h3 className="text-xl font-bold font-space">Get New Number</h3>
+              <h3 className="text-xl font-bold font-space flex items-center gap-2">
+                Get New Number
+                <ArrowUpRight className="size-5" />
+              </h3>
               <p className="text-white/80 text-sm">
-                Purchase additional virtual numbers for your OTP verification needs
+                Purchase additional Nigerian virtual numbers for OTP verification
               </p>
             </div>
             
             <div className="space-y-3">
               <div className="flex items-center justify-between text-sm">
                 <span className="text-white/70">Starting from</span>
-                <span className="font-bold">$12.99</span>
+                <span className="font-bold">₦19,900</span>
               </div>
               
               <Link to="/numbers">
@@ -160,7 +163,7 @@ export default function Dashboard() {
 
         {/* Recent Purchases */}
         <motion.section
-          className="bg-secondary dark:bg-foreground border border-line rounded-xl p-6"
+          className="bg-secondary dark:bg-foreground border border-line rounded-xl p-5"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4, duration: 0.4 }}
@@ -196,7 +199,7 @@ export default function Dashboard() {
                 </div>
                 
                 <div className="text-right">
-                  <p className="text-sm font-bold font-space">${purchase.price}</p>
+                  <p className="text-sm font-bold font-space">₦{purchase.price.toLocaleString()}</p>
                   <span className={`text-xs px-2 py-1 rounded-full ${
                     purchase.status === 'active' 
                       ? 'bg-green-500/20 text-green-500' 
@@ -210,33 +213,6 @@ export default function Dashboard() {
           </div>
         </motion.section>
       </div>
-
-      {/* Security Status */}
-      <motion.section
-        className="bg-secondary dark:bg-foreground border border-line rounded-xl p-6"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6, duration: 0.4 }}
-      >
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="size-10 bg-green-500/20 rounded-lg center">
-              <Shield className="size-5 text-green-500" />
-            </div>
-            <div>
-              <h4 className="font-bold">System Secure</h4>
-              <p className="text-sm text-muted">All numbers are AES-256 encrypted</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2 text-sm text-green-500">
-            <div className="relative flex size-2">
-              <span className="absolute h-full w-full animate-ping rounded-full bg-green-500 opacity-75"></span>
-              <span className="relative size-2 rounded-full bg-green-500"></span>
-            </div>
-            Live
-          </div>
-        </div>
-      </motion.section>
     </div>
   );
 }
