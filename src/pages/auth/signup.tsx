@@ -1,12 +1,5 @@
 import { motion } from "framer-motion";
-import {
-  Pattern,
-  ModeToggle,
-  GobackButton,
-  InputWithIcon,
-  ButtonWithLoader,
-  InputCheck,
-} from "@/components/ui";
+import { Pattern, ModeToggle, GobackButton, InputWithIcon, ButtonWithLoader, InputCheck } from "@/components/ui";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { User, Mail, Lock, Signature } from "lucide-react";
@@ -22,23 +15,26 @@ export default function Signup() {
     password: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    
     setTimeout(() => {
       setLoading(false);
+      console.log("Signup Form:", form);
       navigate("/login");
     }, 1500);
   };
 
   return (
     <Pattern>
-      {/* Topbar actions */}
+      {/* Header Controls */}
       <div className="absolute top-4 left-4 z-50">
-        <button onClick={() => navigate(-1)}>
+        <button onClick={() => navigate(-1)} aria-label="Go back">
           <GobackButton />
         </button>
       </div>
@@ -47,24 +43,25 @@ export default function Signup() {
         <ModeToggle />
       </div>
 
-      {/* Page content */}
-      <div className="min-h-[100dvh] center">
+      {/* Main Content */}
+      <div className="min-h-screen flex items-center justify-center p-4">
         <motion.div
-          className="layout max-w-[400px] w-full space-y-6"
+          className="w-full max-w-[400px] space-y-6"
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35 }}
+          transition={{ duration: 0.4 }}
         >
-          {/* Title */}
-          <div className="text-center space-y-2">
+          {/* Header Section */}
+          <header className="text-center space-y-2">
             <h1 className="text-2xl font-space font-bold">Create Account</h1>
             <p className="text-sm text-muted">
               Join DrexOTP — generate instant OTP virtual numbers.
             </p>
-          </div>
+          </header>
 
-          {/* Form */}
+          {/* Form Section */}
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Personal Information */}
             <InputWithIcon
               icon={<Signature size={20} />}
               type="text"
@@ -75,6 +72,7 @@ export default function Signup() {
               required
             />
 
+            {/* Account Information */}
             <InputWithIcon
               icon={<User size={20} />}
               type="text"
@@ -105,32 +103,43 @@ export default function Signup() {
               required
             />
 
-            {/* Terms Checkbox */}
-            <div className="flex items-center gap-2 text-xs">
+            {/* Terms Agreement */}
+            <div className="flex items-start gap-3 text-sm">
               <InputCheck
                 checked={checked}
                 onChange={() => setChecked(!checked)}
+                className="mt-0.5"
               />
-              <span className="text-muted">
-                I agree to the <span className="text-main">Terms & Privacy</span>
+              <span className="text-muted leading-relaxed">
+                I agree to the{" "}
+                <span className="text-main hover:underline cursor-pointer">
+                  Terms & Privacy
+                </span>
               </span>
             </div>
 
+            {/* Submit Button */}
             <ButtonWithLoader
               loading={loading}
               initialText="Create Account"
               loadingText="Creating Account..."
               className="btn-primary w-full h-10 rounded-md font-semibold"
+              disabled={!checked}
             />
           </form>
 
-          {/* Link to Login */}
-          <p className="text-xs text-muted text-center">
-            Already have an account?{" "}
-            <Link to="/login" className="text-main hover:underline">
-              Log in
-            </Link>
-          </p>
+          {/* Footer Link */}
+          <footer className="text-center">
+            <p className="text-sm text-muted">
+              Already have an account?{" "}
+              <Link 
+                to="/login" 
+                className="text-main hover:underline font-medium"
+              >
+                Log in
+              </Link>
+            </p>
+          </footer>
         </motion.div>
       </div>
     </Pattern>
