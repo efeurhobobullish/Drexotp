@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Phone, CreditCard, Plus, Activity, Shield, ArrowUpRight } from "lucide-react";
+import { Phone, CreditCard, Plus, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { MainLayout } from "@/layouts";
 
@@ -7,43 +7,43 @@ export default function Dashboard() {
   const userData = {
     balance: 125500,
     totalNumbers: 8,
-    activeNumbers: 6,
-    numbersUsed: 247
   };
 
   const stats = [
-    { icon: CreditCard, label: "Account Balance", value: `₦${userData.balance.toLocaleString()}`, color: "green", description: "Available funds" },
-    { icon: Phone, label: "Total Numbers", value: userData.totalNumbers, color: "blue", description: "Purchased numbers" },
-    { icon: Activity, label: "Active Numbers", value: userData.activeNumbers, color: "amber", description: "Currently active" },
-    { icon: Shield, label: "Numbers Used", value: userData.numbersUsed.toLocaleString(), color: "purple", description: "Total OTPs generated" }
+    {
+      icon: CreditCard,
+      label: "Account Balance",
+      value: `₦${userData.balance.toLocaleString()}`,
+      description: "Available funds",
+    },
+    {
+      icon: Phone,
+      label: "Total Numbers",
+      value: userData.totalNumbers,
+      description: "Purchased numbers",
+    },
   ];
-
-  const recentPurchases = [
-    { id: 1, number: "+234 901 234 5678", price: 24500, date: "2024-01-15", status: "active", usage: "12 OTPs" },
-    { id: 2, number: "+234 902 345 6789", price: 24500, date: "2024-01-10", status: "active", usage: "8 OTPs" },
-    { id: 3, number: "+234 903 456 7890", price: 19900, date: "2024-01-05", status: "expired", usage: "23 OTPs" },
-  ];
-
-  const getColorClasses = (color: string) => ({
-    green: "bg-green-500/20 text-green-500",
-    blue: "bg-blue-500/20 text-blue-500",
-    amber: "bg-amber-500/20 text-amber-500",
-    purple: "bg-purple-500/20 text-purple-500"
-  }[color as keyof object] || "bg-blue-500/20 text-blue-500");
 
   return (
     <MainLayout>
       <div className="main space-y-6 pb-4">
-        
-        {/* Welcome */}
-        <motion.section initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-          <h1 className="text-2xl font-bold font-space mb-1">Welcome back, <span className="text-main">John</span> 👋</h1>
-          <p className="text-muted text-sm">Manage your virtual numbers and monitor usage</p>
+        {/* Welcome Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <h1 className="text-2xl font-bold font-space mb-1">
+            Welcome back, <span className="text-main">John</span> 👋
+          </h1>
+          <p className="text-muted text-sm">
+            Manage your virtual numbers and monitor usage
+          </p>
         </motion.section>
 
         {/* Stats */}
         <motion.section
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.4 }}
@@ -53,14 +53,14 @@ export default function Dashboard() {
             return (
               <motion.div
                 key={stat.label}
-                className="bg-secondary dark:bg-foreground border border-line rounded-xl p-4"
+                className="bg-secondary border border-line rounded-xl p-4"
                 initial={{ opacity: 0, scale: 0.97 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.2 + index * 0.1 }}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`size-10 rounded-lg center ${getColorClasses(stat.color)}`}>
-                    <Icon className="size-5" />
+                  <div className="size-10 rounded-lg center bg-primary/10 text-primary">
+                    <Icon size={20} />
                   </div>
                   <div>
                     <p className="text-xs text-muted">{stat.label}</p>
@@ -73,72 +73,43 @@ export default function Dashboard() {
           })}
         </motion.section>
 
-        {/* Split Cards */}
+        {/* Call to Action & Recent */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pb-8">
-          
-          {/* Purchase New Number */}
+          {/* Purchase Card */}
           <motion.section
-            className="bg-gradient-to-br from-main to-main/80 rounded-xl p-5 text-white"
+            className="bg-main text-secondary rounded-xl p-5"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, duration: 0.4 }}
           >
-            <div className="space-y-3">
-              <h3 className="text-xl font-space font-semibold flex items-center gap-2">Get New Number <ArrowUpRight size={18} /></h3>
-              <p className="text-sm text-white/80">Purchase additional virtual numbers for OTP verification</p>
-              
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-white/70">Starting from</span>
-                <span className="font-bold">₦19,900</span>
-              </div>
-              
-              <Link to="/numbers">
-                <button className="w-full py-3 rounded-xl font-semibold bg-white text-main hover:bg-white/85 transition flex items-center justify-center gap-2">
-                  <Plus size={18} /> Purchase Number
-                </button>
-              </Link>
+            <h3 className="text-xl font-space flex items-center gap-2">
+              Get New Number <ArrowUpRight className="size-5" />
+            </h3>
+            <p className="text-secondary/70 text-sm mt-1">
+              Purchase additional numbers for OTP verification
+            </p>
+
+            <div className="flex items-center justify-between mt-3 text-sm">
+              <span className="text-secondary/60">Starting from</span>
+              <span className="font-bold">₦19,900</span>
             </div>
+
+            <Link to="/numbers">
+              <button className="btn bg-background text-main mt-4 w-full py-3 rounded-xl font-semibold hover:bg-background/90 transition flex items-center justify-center gap-2">
+                <Plus size={18} /> Purchase Number
+              </button>
+            </Link>
           </motion.section>
 
-          {/* Recent Purchases */}
+          {/* Recent Placeholder */}
           <motion.section
-            className="bg-secondary dark:bg-foreground border border-line rounded-xl p-5"
+            className="bg-secondary border border-line rounded-xl p-5"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4, duration: 0.4 }}
           >
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-space font-semibold">Recent Numbers</h3>
-              <Link to="/numbers" className="text-main hover:text-main/80 text-xs font-medium">View All</Link>
-            </div>
-
-            <div className="space-y-2">
-              {recentPurchases.map((purchase, index) => (
-                <motion.div
-                  key={purchase.id}
-                  className="flex items-center justify-between p-3 rounded-lg border border-line/50 hover:border-line bg-background/50 transition-colors"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 + index * 0.1 }}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className={`size-8 rounded-lg center ${purchase.status === "active" ? "bg-green-500/20" : "bg-amber-500/20"}`}>
-                      <Phone className={`size-4 ${purchase.status === "active" ? "text-green-500" : "text-amber-500"}`} />
-                    </div>
-                    <div>
-                      <p className="text-sm font-medium">{purchase.number}</p>
-                      <p className="text-xs text-muted">{purchase.usage}</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-space font-semibold">₦{purchase.price.toLocaleString()}</p>
-                    <span className={`text-xs px-2 py-1 rounded-full ${purchase.status === "active" ? "bg-green-500/20 text-green-500" : "bg-amber-500/20 text-amber-500"}`}>
-                      {purchase.status}
-                    </span>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+            <h3 className="font-space font-semibold mb-3">Recent Activity</h3>
+            <p className="text-sm text-muted">No activities yet</p>
           </motion.section>
         </div>
       </div>
