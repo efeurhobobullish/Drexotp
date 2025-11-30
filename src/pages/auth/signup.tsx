@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { AuthLayout } from "@/layouts";
-import { Pattern, ModeToggle, GobackButton, InputWithIcon, ButtonWithLoader, InputCheck,   } from "@/components/ui";
+import { Pattern, ModeToggle, GobackButton, InputWithIcon, ButtonWithLoader, InputCheck } from "@/components/ui";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { User, Mail, Lock, Signature } from "lucide-react";
@@ -32,21 +32,24 @@ export default function Signup() {
 
   return (
     <Pattern>
+      {/* Positioned globally, not inside the auth container */}
+      <div className="absolute top-4 left-4 z-50">
+        <button onClick={() => navigate(-1)}>
+          <GobackButton />
+        </button>
+      </div>
+
+      <div className="absolute top-4 right-4 z-50">
+        <ModeToggle />
+      </div>
+
       <AuthLayout>
         <motion.div
-          className="relative layout space-y-6 max-w-[400px]"
+          className="layout space-y-6 max-w-[400px]"
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          {/* Header */}
-          <div className="flex justify-between items-center mb-2">
-            <button onClick={() => navigate(-1)}>
-              <GobackButton />
-            </button>
-            <ModeToggle />
-          </div>
-
           {/* Title */}
           <div className="text-center space-y-2">
             <h1 className="text-2xl font-space font-bold">Create Account</h1>
@@ -58,24 +61,24 @@ export default function Signup() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <InputWithIcon
-  icon={<Signature size={20} />}
-  type="text"
-  name="fullName"
-  placeholder="Full Name (e.g. Efeurhobo Bullish)"
-  value={form.fullName}
-  onChange={handleChange}
-  required
-/>
+              icon={<Signature size={20} />}
+              type="text"
+              name="fullName"
+              placeholder="Full Name (e.g. Efeurhobo Bullish)"
+              value={form.fullName}
+              onChange={handleChange}
+              required
+            />
 
-<InputWithIcon
-  icon={<User size={20} />}
-  type="text"
-  name="username"
-  placeholder="Username"
-  value={form.username}
-  onChange={handleChange}
-  required
-/>
+            <InputWithIcon
+              icon={<User size={20} />}
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={form.username}
+              onChange={handleChange}
+              required
+            />
 
             <InputWithIcon
               icon={<Mail size={20} />}
@@ -108,7 +111,7 @@ export default function Signup() {
               </span>
             </div>
 
-            {/* Submit Button With Loader */}
+            {/* Submit */}
             <ButtonWithLoader
               loading={loading}
               initialText="Create Account"
@@ -117,7 +120,7 @@ export default function Signup() {
             />
           </form>
 
-          {/* Link to Login */}
+          {/* Link */}
           <p className="text-xs text-muted text-center">
             Already have an account?{" "}
             <Link to="/login" className="text-main hover:underline">
