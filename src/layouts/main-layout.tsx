@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Shield, Zap, User, LogOut, Settings } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import ModeToggle from "@/components/ui";
+import { ModeToggle } from "@/components/ui";
 
 interface MainLayoutProps {
   children: React.ReactNode;
