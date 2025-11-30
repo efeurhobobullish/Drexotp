@@ -1,43 +1,46 @@
-/* Font - Use optimal loading */
+/* ========================================= */
+/*  Font Import (Optimized)                  */
+/* ========================================= */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
-
 @import "tailwindcss";
-
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ===================== */
-/*  ROOT COLOR SYSTEM    */
-/* ===================== */
+/* ========================================= */
+/*  ROOT COLOR SYSTEM                        */
+/* ========================================= */
 
 :root {
-  /* Core colors */
+  /* Light mode colors */
   --background: #ffffff;
   --foreground: #f5f5f5;
   --secondary: #f9f9f9;
 
-  --main: #333333;       /* Slightly darker for readability */
-  --primary: #1f1f1f;    /* Contrast-heavy */
+  --main: #333333;
+  --main-rgb: 51, 51, 51; /* RGB for transparency */
 
+  --primary: #1f1f1f;
   --muted: #8c8c8c;
   --line: #e6e6e6;
 }
 
-/* Dark theme */
 .dark {
+  /* Dark mode colors */
   --background: #0b0b0b;
   --foreground: #212121;
   --secondary: #121212;
 
   --main: #fefefe;
-  --primary: #fefefe;
+  --main-rgb: 254, 254, 254;
 
+  --primary: #fefefe;
   --muted: #a1a1a1;
   --line: #1e1e1e;
 }
 
-/* ===================== */
-/*  TAILWIND THEME MAP   */
-/* ===================== */
+/* ========================================= */
+/*  TAILWIND THEME BIND                      */
+/* ========================================= */
+
 @theme inline {
   --font-sans: "Plus Jakarta Sans", sans-serif;
   --color-background: var(--background);
@@ -49,9 +52,9 @@
   --color-primary: var(--primary);
 }
 
-/* ===================== */
-/*  GLOBAL STYLING       */
-/* ===================== */
+/* ========================================= */
+/*  GLOBAL STYLING                           */
+/* ========================================= */
 
 * {
   @apply outline-none;
@@ -59,10 +62,11 @@
 
 body {
   @apply bg-background text-main font-sans antialiased;
-  font-feature-settings: "liga", "kern";
 }
 
-/* Containers */
+/* ========================================= */
+/*  LAYOUT CONTAINERS                        */
+/* ========================================= */
 
 .main {
   @apply max-w-[90%] 2xl:max-w-[1280px] mx-auto;
@@ -72,29 +76,26 @@ body {
   @apply max-w-[90%] md:max-w-[700px] mx-auto;
 }
 
-/* Flex utilities */
-
 .center {
   @apply flex items-center justify-center;
 }
 
-/* ===================== */
-/*  BUTTONS              */
-/* ===================== */
+/* ========================================= */
+/*  BUTTON STYLES                            */
+/* ========================================= */
 
 button,
 .btn {
-  @apply cursor-pointer flex items-center justify-center gap-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply cursor-pointer flex items-center justify-center gap-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
-/* Default primary button */
 .btn-primary {
   @apply bg-primary text-white dark:text-[#171717] font-semibold px-4 py-2 rounded-md hover:opacity-90 active:opacity-80;
 }
 
-/* ===================== */
-/*  SCROLLBAR UTILITY    */
-/* ===================== */
+/* ========================================= */
+/*  SCROLLBAR HIDING                         */
+/* ========================================= */
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
