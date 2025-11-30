@@ -1,128 +1,159 @@
 import { motion } from "framer-motion";
-import { Search, Zap } from "lucide-react";
+import { ChevronDown, ChevronUp, Search, Zap, Globe } from "lucide-react";
 import { useState } from "react";
-import { MainLayout } from "@/layouts";
+import { MainLayout } from "@/layouts/main-layout";
 
-// Using emoji flags (can be replaced with local SVG icons later)
-const countries = [
-  { code: "NG", name: "Nigeria", flag: "🇳🇬" },
-  { code: "US", name: "United States", flag: "🇺🇸" },
-  { code: "GB", name: "United Kingdom", flag: "🇬🇧" },
-  { code: "IN", name: "India", flag: "🇮🇳" },
-  { code: "CA", name: "Canada", flag: "🇨🇦" },
-];
+export default function Numbers() {
+  // Mock data
+  const countries = [
+    { code: "NG", name: "Nigeria", flag: "🇳🇬" },
+    { code: "US", name: "United States", flag: "🇺🇸" },
+    { code: "GB", name: "United Kingdom", flag: "🇬🇧" },
+    { code: "IN", name: "India", flag: "🇮🇳" },
+  ];
 
-const services = [
-  { id: 1, name: "WhatsApp", price: 19900 },
-  { id: 2, name: "Telegram", price: 15000 },
-  { id: 3, name: "Gmail", price: 22000 },
-];
+  const services = [
+    { id: 1, name: "WhatsApp", price: 19900 },
+    { id: 2, name: "Telegram", price: 15000 },
+    { id: 3, name: "Gmail", price: 22000 },
+  ];
 
-export default function NumbersPage() {
-  const [selectedCountry, setSelectedCountry] = useState("NG");
-  const [query, setQuery] = useState("");
+  const [countryDropdown, setCountryDropdown] = useState(false);
+  const [serviceDropdown, setServiceDropdown] = useState(false);
+
+  const [selectedCountry, setSelectedCountry] = useState<any>(countries[0]);
+  const [selectedService, setSelectedService] = useState<any>(services[0]);
+
+  const [countryQuery, setCountryQuery] = useState("");
+  const [serviceQuery, setServiceQuery] = useState("");
+
+  const filteredCountries = countries.filter((country) =>
+    country.name.toLowerCase().includes(countryQuery.toLowerCase())
+  );
 
   const filteredServices = services.filter((service) =>
-    service.name.toLowerCase().includes(query.toLowerCase())
+    service.name.toLowerCase().includes(serviceQuery.toLowerCase())
   );
 
   return (
     <MainLayout>
       <div className="main space-y-8 pb-6">
-        
-        {/* Title */}
+
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
           <h1 className="text-2xl font-space font-bold">Purchase Number</h1>
-          <p className="text-sm text-muted">Select country and choose service</p>
+          <p className="text-sm text-muted">Select country & service</p>
         </motion.div>
 
-        {/* Country Selector */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="flex items-center gap-2 overflow-x-auto hide-scrollbar"
-        >
-          {countries.map((country) => (
-            <button
-              key={country.code}
-              onClick={() => setSelectedCountry(country.code)}
-              className={`px-4 py-2 rounded-xl border flex items-center gap-2 transition ${
-                selectedCountry === country.code
-                  ? "bg-primary text-background border-primary"
-                  : "bg-secondary dark:bg-foreground border-line text-main hover:border-main/50"
-              }`}
+        {/* Country Selection Dropdown */}
+        <div className="space-y-2 relative">
+          <label className="text-sm text-muted">Country</label>
+          <div
+            className="border border-line bg-secondary dark:bg-foreground rounded-xl h-11 flex items-center justify-between px-4 cursor-pointer"
+            onClick={() => {
+              setCountryDropdown(!countryDropdown);
+              setServiceDropdown(false);
+            }}
+          >
+            <span className="flex items-center gap-2">
+              {selectedCountry.flag} {selectedCountry.name}
+            </span>
+            {countryDropdown ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+          </div>
+
+          {countryDropdown && (
+            <motion.div
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="absolute z-[50] w-full bg-background shadow-md border border-line rounded-xl mt-1"
             >
-              <span className="text-lg">{country.flag}</span>
-              <span className="text-sm">{country.name}</span>
-            </button>
-          ))}
-        </motion.div>
+              <div className="relative p-2">
+                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+                <input
+                  className="w-full border border-line bg-background rounded-lg text-sm pl-8 h-9"
+                  placeholder="Search country..."
+                  value={countryQuery}
+                  onChange={(e) => setCountryQuery(e.target.value)}
+                />
+              </div>
 
-        {/* Search Services */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-          className="relative"
-        >
-          <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
-          <input
-            type="text"
-            placeholder="Search services..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="w-full h-11 pl-12 rounded-xl border border-line bg-background text-sm"
-          />
-        </motion.div>
-
-        {/* Services List */}
-        <motion.div
-          className="space-y-3"
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-        >
-          <h2 className="text-lg font-space font-semibold">
-            Services ({countries.find((c) => c.code === selectedCountry)?.name})
-          </h2>
-
-          {filteredServices.length > 0 ? (
-            filteredServices.map((service, index) => (
-              <motion.div
-                key={service.id}
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.25 + index * 0.03 }}
-                className="p-4 border border-line bg-secondary dark:bg-foreground rounded-xl flex justify-between items-center"
-              >
-                <div className="flex items-center gap-2">
-                  <div className="size-8 center rounded-lg bg-primary/10 text-primary">
-                    <Zap size={16} />
-                  </div>
-                  <p className="text-sm font-medium">{service.name}</p>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <p className="text-sm font-space font-semibold">
-                    ₦{service.price.toLocaleString()}
-                  </p>
-                  <button className="btn-primary px-4 py-2 rounded-xl text-sm">
-                    Purchase
+              <div className="max-h-48 overflow-y-auto">
+                {filteredCountries.map((country) => (
+                  <button
+                    key={country.code}
+                    onClick={() => {
+                      setSelectedCountry(country);
+                      setCountryDropdown(false);
+                      setCountryQuery("");
+                    }}
+                    className="w-full text-left px-4 py-2 hover:bg-secondary transition text-sm flex items-center gap-2"
+                  >
+                    {country.flag} {country.name}
                   </button>
-                </div>
-              </motion.div>
-            ))
-          ) : (
-            <p className="text-center text-sm text-muted py-4">
-              No services found
-            </p>
+                ))}
+              </div>
+            </motion.div>
           )}
-        </motion.div>
+        </div>
+
+        {/* Service Selection Dropdown */}
+        <div className="space-y-2 relative">
+          <label className="text-sm text-muted">Service</label>
+          <div
+            className="border border-line bg-secondary dark:bg-foreground rounded-xl h-11 flex items-center justify-between px-4 cursor-pointer"
+            onClick={() => {
+              setServiceDropdown(!serviceDropdown);
+              setCountryDropdown(false);
+            }}
+          >
+            <span className="flex items-center gap-2">
+              <Zap size={14} /> {selectedService.name}
+            </span>
+            {serviceDropdown ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+          </div>
+
+          {serviceDropdown && (
+            <motion.div
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="absolute z-[50] w-full bg-background shadow-md border border-line rounded-xl mt-1"
+            >
+              <div className="relative p-2">
+                <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" />
+                <input
+                  className="w-full border border-line bg-background rounded-lg text-sm pl-8 h-9"
+                  placeholder="Search service..."
+                  value={serviceQuery}
+                  onChange={(e) => setServiceQuery(e.target.value)}
+                />
+              </div>
+
+              <div className="max-h-48 overflow-y-auto">
+                {filteredServices.map((service) => (
+                  <button
+                    key={service.id}
+                    onClick={() => {
+                      setSelectedService(service);
+                      setServiceDropdown(false);
+                      setServiceQuery("");
+                    }}
+                    className="w-full text-left px-4 py-2 hover:bg-secondary transition text-sm flex items-center gap-2"
+                  >
+                    <Zap size={14} /> {service.name}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </div>
+
+        {/* Purchase Button */}
+        <button className="btn-primary w-full h-11 rounded-xl text-sm font-semibold">
+          Purchase {selectedService.name} Number ({selectedCountry.name})
+        </button>
       </div>
     </MainLayout>
   );
