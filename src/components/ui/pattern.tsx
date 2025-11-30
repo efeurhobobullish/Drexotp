@@ -1,24 +1,20 @@
 export default function Pattern({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-[100dvh] w-full bg-background relative overflow-y-auto">
-      
-      {/* Soft tiny dot pattern */}
+    <div className="min-h-[100dvh] w-full bg-background relative overflow-y-scroll">
       <div
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
           backgroundImage: `
-            radial-gradient(circle, var(--line) 0.6px, transparent 0.6px)
+            linear-gradient(to right, rgba(var(--main-rgb), 0.05) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(var(--main-rgb), 0.05) 1px, transparent 1px)
           `,
-          backgroundSize: "18px 18px",
-          opacity: "0.35",
-          maskImage:
-            "radial-gradient(circle at 50% 30%, #000 65%, transparent 100%)",
+          backgroundSize: "12px 12px", // Smaller, tidier grid
           WebkitMaskImage:
-            "radial-gradient(circle at 50% 30%, #000 65%, transparent 100%)",
+            "radial-gradient(ellipse 80% 70% at 50% 10%, #000 70%, transparent 100%)",
+          maskImage:
+            "radial-gradient(ellipse 80% 70% at 50% 10%, #000 70%, transparent 100%)",
         }}
       />
-
-      {/* Content above background */}
       <div className="relative z-10">{children}</div>
     </div>
   );
