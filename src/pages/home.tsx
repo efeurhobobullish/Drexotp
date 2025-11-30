@@ -2,55 +2,89 @@ import ModeToggle from "@/components/ui/mode-toggle";
 import { Pattern } from "@/components/ui";
 import { libraries } from "@/constants/data";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function Home() {
   return (
-    <>
-      <Pattern>
-        <div className="h-[100dvh] relative z-10 center flex-col gap-10 text-center layout">
-          <div className="center gap-2">
-            <div className="center gap-2 drop-shadow-2xl drop-shadow-main/10 dark:bg-foreground bg-background rounded-full px-4 py-2 backdrop-blur border border-foreground">
-              <span className="relative flex size-3">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75"></span>
-                <span className="relative inline-flex size-3 rounded-full bg-green-500"></span>
-              </span>
-              <p className="text-sm text-muted">Active Security 24/7</p>
-            </div>
+    <Pattern>
+      <div className="h-[100dvh] relative z-10 center flex-col gap-10 text-center layout">
+        
+        {/* Status Badge */}
+        <motion.div
+          className="center"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <div className="center gap-2 drop-shadow-main/10 dark:bg-foreground bg-background rounded-full px-4 py-2 backdrop-blur border border-foreground">
+            <span className="relative flex size-3">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-500 opacity-75"></span>
+              <span className="relative inline-flex size-3 rounded-full bg-green-500"></span>
+            </span>
+            <p className="text-sm text-muted">System Online 24/7</p>
           </div>
-          <div className="space-y-2">
-            <h1 className="text-6xl md:leading-[80px] leading-[60px] font-space font-bold text-transparent bg-clip-text bg-gradient-to-r from-main to-main/70 dark:to-main/50">
-            Quest Lock
-            </h1>
-           
-          <p className="text-muted text-xs">Secure with <span className="font-bold text-yellow-500">AES-256</span> encryption.</p>
-          <p className="text-muted text-sm">Stay Secure, Stay Safe. Store any sensitive information securely with Quest Lock.</p>
-          </div>
+        </motion.div>
 
-          <div className="flex gap-4 text-sm md:flex-row flex-col">
-            <Link to="/pin">
+        {/* Title & description */}
+        <motion.div
+          className="space-y-2"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.5 }}
+        >
+          <h1 className="text-6xl md:leading-[80px] leading-[60px] font-space font-bold text-transparent bg-clip-text bg-gradient-to-r from-main to-main/70 dark:to-main/50">
+            DrexOTP
+          </h1>
+
+          <p className="text-muted text-xs">
+            Verified using <span className="font-bold text-yellow-500">AES-256</span> encryption.
+          </p>
+          <p className="text-muted text-sm">
+            Instant OTP virtual numbers. No reuse. No complications.
+          </p>
+        </motion.div>
+
+        {/* CTA Buttons */}
+        <motion.div
+          className="flex gap-4 text-sm md:flex-row flex-col"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+        >
+          <Link to="/main">
             <button className="btn-primary min-w-[200px] h-10 rounded-full">
-              Enter Passcode
+              Get OTP Now
             </button>
-            </Link>
-           
-          </div>
+          </Link>
+        </motion.div>
 
-          <ul className="center flex-wrap gap-2">
-            {libraries.map((library) => (
-              <li
-                key={library}
-                className="text-xs text-muted bg-secondary border border-line rounded-full px-4 py-2"
-              >
-                {library}
-              </li>
-            ))}
-          </ul>
-          <div className="absolute top-4 right-4">
-            <ModeToggle />
-          </div>
+        {/* Libraries / tools used */}
+        <motion.ul
+          className="center flex-wrap gap-2"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.6 }}
+        >
+          {libraries.map((library) => (
+            <li
+              key={library}
+              className="text-xs text-muted bg-secondary border border-line rounded-full px-4 py-2"
+            >
+              {library}
+            </li>
+          ))}
+        </motion.ul>
 
-        </div>
-      </Pattern>
-    </>
+        {/* Mode Toggle */}
+        <motion.div
+          className="absolute top-4 right-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4 }}
+        >
+          <ModeToggle />
+        </motion.div>
+      </div>
+    </Pattern>
   );
 }
