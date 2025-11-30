@@ -6,4 +6,6 @@ export {default as SelectWithoutIcon} from "./SelectWithoutIcon";
 export {default as ScrollToTop} from "./ScrollToTop";
 export {default as GobackButton} from "./GobackButton";
 export {default as Pattern} from "./pattern";
+export {default as ModeToggle} from "./mode-toggle";
+export {default as InputCheck} from "./input-check";
 
