@@ -1,32 +1,34 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Raleway:ital,wght@0,100..900;1,100..900&family=Space+Grotesk:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Space+Grotesk:wght@300..700&display=swap');
 
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #fafafa;
-  --secondary: #f4f4f5;
-  --foreground: #e4e4e7;
-  --main: #18181b;
-  --muted: #71717a;
-  --primary: #09090b;
-  --line: #e4e4e7;
+  --background: #ffffff;
+  --secondary: #f1f5f9;
+  --foreground: #f9f9f9;
+  --main: #4b556c;
+  --muted: #999999;
+  --primary: #30b96e;
+  --primary-2: #217848;
+  --line: #f1f5f9;
 }
 
 .dark {
-  --background: #121212;
-  --foreground: #1f1f1f;
-  --main: #e4e4e7;
-  --secondary: #1a1a1a;
-  --muted: #a1a1aa;
-  --line: #27272a;
-  --primary: #fafafa;
+  --background: #050810;
+  --foreground: #21242c;
+  --main: #fefefe;
+  --secondary: #12151c;
+  --muted: #999999;
+  --line: #2a2e35;
+  --primary: #13af5a;
+  --primary-2: #217848;
 }
 
 @theme inline {
   --font-sans: "Plus Jakarta Sans", sans-serif;
-  --font-raleway: "Raleway", sans-serif;
+  --font-instrument: "Instrument Sans", sans-serif;
   --font-space: "Space Grotesk", sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -35,6 +37,7 @@
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-primary: var(--primary);
+  --color-primary-2: var(--primary-2);
 }
 
 *{
@@ -44,13 +47,16 @@
 body {
  @apply bg-background text-main font-sans;
 }
+.f{
+  color: #217848;
+}
 
 .main {
   @apply max-w-[90%] 2xl:max-w-[1280px] mx-auto;
 }
 
 .layout {
-  @apply max-w-[90%] md:max-w-[700px] mx-auto;
+  @apply max-w-[90%] md:max-w-[800px] mx-auto;
 }
 
 .center {
@@ -59,11 +65,11 @@ body {
 
 button,
 .btn {
-  @apply cursor-pointer font-space flex items-center justify-center gap-2 disabled:opacity-50;
+  @apply cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50;
 }
 
 .btn-primary {
-  @apply text-white dark:text-[#171717] bg-primary font-semibold;
+  @apply text-white bg-primary font-semibold;
 }
 
 .hide-scrollbar::-webkit-scrollbar {
