@@ -58,22 +58,24 @@ export default function Signup() {
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <InputWithIcon
-              icon={<Signature size={20} />}
-              name="fullName"
-              placeholder="Full Name (e.g. Efeurhobo Bullish)"
-              value={form.fullName}
-              onChange={handleChange}
-              required
-            />
+  icon={<Signature size={20} />}
+  type="text"
+  name="fullName"
+  placeholder="Full Name (e.g. Efeurhobo Bullish)"
+  value={form.fullName}
+  onChange={handleChange}
+  required
+/>
 
-            <InputWithIcon
-              icon={<User size={20} />}
-              name="username"
-              placeholder="Username"
-              value={form.username}
-              onChange={handleChange}
-              required
-            />
+<InputWithIcon
+  icon={<User size={20} />}
+  type="text"
+  name="username"
+  placeholder="Username"
+  value={form.username}
+  onChange={handleChange}
+  required
+/>
 
             <InputWithIcon
               icon={<Mail size={20} />}
