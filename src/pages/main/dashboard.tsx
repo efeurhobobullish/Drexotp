@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Phone, CreditCard, Plus, ArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { MainLayout } from "@/layouts/main-layout";
+import { MainLayout } from "@/layouts";
 
 export default function Dashboard() {
   const userData = {
