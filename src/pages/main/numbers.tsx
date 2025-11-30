@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ChevronDown, ChevronUp, Search, Zap, Globe } from "lucide-react";
+import { ChevronDown, ChevronUp, Search, Zap } from "lucide-react";
 import { useState } from "react";
 import { MainLayout } from "@/layouts";
 
