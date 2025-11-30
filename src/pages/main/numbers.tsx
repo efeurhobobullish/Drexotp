@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
-import { Phone, Search, Globe } from "lucide-react";
+import { Search, Globe, Zap } from "lucide-react";
 import { useState } from "react";
+import { MainLayout } from "@/layouts/main-layout";
 import { Link } from "react-router-dom";
-import { MainLayout } from "@/layouts";
 
 export default function Numbers() {
-  // Example country data (replace with API later)
+  // Mock data (replace with API later)
   const countries = [
     { code: "NG", name: "Nigeria" },
     { code: "US", name: "United States" },
@@ -14,7 +14,15 @@ export default function Numbers() {
     { code: "CA", name: "Canada" },
   ];
 
+  const services = [
+    { id: 1, name: "WhatsApp", price: 19900 },
+    { id: 2, name: "Telegram", price: 15000 },
+    { id: 3, name: "Gmail", price: 22000 },
+  ];
+
   const [query, setQuery] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState("");
+
   const filteredCountries = countries.filter((country) =>
     country.name.toLowerCase().includes(query.toLowerCase())
   );
@@ -22,22 +30,22 @@ export default function Numbers() {
   return (
     <MainLayout>
       <div className="main space-y-8 pb-6">
-        
-        {/* Page Title */}
+
+        {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3 }}
         >
-          <h1 className="text-2xl font-space font-bold">Numbers</h1>
-          <p className="text-sm text-muted">Search country before selecting services</p>
+          <h1 className="text-2xl font-space font-bold">Buy Number</h1>
+          <p className="text-sm text-muted">Search country and pick a service</p>
         </motion.div>
 
         {/* Country Search */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
+          transition={{ duration: 0.3 }}
           className="relative"
         >
           <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
@@ -50,36 +58,67 @@ export default function Numbers() {
           />
         </motion.div>
 
-        {/* Countries List */}
+        {/* Country Selection */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
           className="space-y-2"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
         >
-          {filteredCountries.length > 0 ? (
-            filteredCountries.map((country, index) => (
+          {filteredCountries.map((country, index) => (
+            <motion.div
+              key={country.code}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 * index }}
+            >
+              <button
+                onClick={() => setSelectedCountry(country.code)}
+                className={`flex items-center gap-3 w-full p-3 border rounded-xl transition ${
+                  selectedCountry === country.code
+                    ? "border-main bg-primary/10"
+                    : "border-line bg-secondary dark:bg-foreground"
+                }`}
+              >
+                <Globe size={16} className="text-primary" />
+                <p className="text-sm">{country.name}</p>
+              </button>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Services Based on Country */}
+        {selectedCountry && (
+          <motion.div
+            className="space-y-3"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
+          >
+            <h2 className="text-lg font-space font-semibold">
+              Select Service — {countries.find((c) => c.code === selectedCountry)?.name}
+            </h2>
+
+            {services.map((service, index) => (
               <motion.div
-                key={country.code}
+                key={service.id}
                 initial={{ opacity: 0, y: 5 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 + index * 0.03 }}
+                transition={{ delay: 0.05 * index }}
+                className="p-4 border border-line rounded-xl bg-background flex justify-between items-center"
               >
-                <Link
-                  to={`/numbers/services/${country.code}`} // Next: Services for selected country
-                  className="flex items-center gap-3 p-3 border border-line rounded-xl bg-secondary dark:bg-foreground hover:border-line/80 transition"
-                >
-                  <div className="size-8 rounded-lg center bg-primary/10 text-primary">
-                    <Globe size={16} />
-                  </div>
-                  <p className="text-sm font-medium">{country.name}</p>
+                <div className="flex items-center gap-2">
+                  <Zap size={18} className="text-primary" />
+                  <p className="text-sm font-medium">{service.name}</p>
+                </div>
+                <Link to={`/numbers/purchase/${selectedCountry}/${service.id}`}>
+                  <button className="btn-primary px-4 py-2 rounded-xl text-sm">
+                    Use
+                  </button>
                 </Link>
               </motion.div>
-            ))
-          ) : (
-            <p className="text-center text-sm text-muted py-4">No countries found</p>
-          )}
-        </motion.div>
+            ))}
+          </motion.div>
+        )}
       </div>
     </MainLayout>
   );
