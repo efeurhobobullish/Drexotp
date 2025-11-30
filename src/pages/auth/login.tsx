@@ -29,7 +29,7 @@ export default function Login() {
     setTimeout(() => {
       setLoading(false);
       console.log("Login Form:", form);
-      navigate("/main"); // Go to dashboard after login
+      navigate("/dashboard"); // Go to dashboard after login
     }, 1500);
   };
 
