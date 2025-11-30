@@ -8,12 +8,12 @@ export default function Header() {
 
   const handleLogout = () => {
     // Add logout logic here
-    navigate('/');
+    navigate("/");
   };
 
   return (
-    <motion.header 
-      className="sticky top-0 z-50 border-b border-line bg-background/80 backdrop-blur"
+    <motion.header
+      className="sticky top-0 z-50 border-b border-line bg-background/80 backdrop-blur-sm"
       initial={{ y: -10, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.3 }}
@@ -21,45 +21,49 @@ export default function Header() {
       <div className="flex justify-between items-center h-16 px-4">
         {/* Logo */}
         <div className="flex items-center gap-3">
-          <div className="size-10 bg-gradient-to-r from-main to-main/70 rounded-full center text-white font-bold text-sm">
+          <div className="size-10 rounded-full bg-primary center text-background font-space font-bold text-sm shadow-sm">
             DT
           </div>
           <div>
-            <h1 className="font-space font-bold text-lg">DrexOTP</h1>
+            <h1 className="font-space font-semibold text-lg">DrexOTP</h1>
             <p className="text-xs text-muted">Secure Numbers</p>
           </div>
         </div>
-        
-        {/* Header Actions */}
+
+        {/* Right Actions */}
         <div className="flex items-center gap-3">
           <ModeToggle />
-          
-          {/* User Profile Dropdown */}
+
+          {/* User Dropdown */}
           <div className="relative group">
-            <button className="flex items-center gap-2 p-2 rounded-xl hover:bg-secondary transition-colors">
-              <div className="size-8 bg-gradient-to-r from-main to-main/70 rounded-full center text-white text-xs font-bold">
+            <button className="flex items-center gap-2 p-1.5 rounded-full hover:bg-secondary transition-colors">
+              <div className="size-8 rounded-full bg-primary center text-background text-xs font-semibold">
                 JD
               </div>
             </button>
-            
-            {/* Dropdown Menu */}
-            <div className="absolute right-0 top-12 w-48 bg-background border border-line rounded-xl shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+
+            {/* Dropdown */}
+            <div className="absolute right-0 top-12 w-48 bg-background border border-line rounded-xl shadow-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
               <div className="p-2">
+                {/* User Info */}
                 <div className="px-3 py-2 border-b border-line">
-                  <p className="font-medium">John Doe</p>
+                  <p className="text-sm font-medium">John Doe</p>
                   <p className="text-xs text-muted">Premium User</p>
                 </div>
-                
-                <button className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-muted hover:text-main hover:bg-secondary transition-colors">
-                  <Settings className="size-4" />
+
+                {/* Menu Items */}
+                <button
+                  className="flex items-center gap-3 w-full px-3 py-2 text-muted hover:text-main hover:bg-secondary rounded-lg transition-colors text-sm"
+                >
+                  <Settings size={16} />
                   <span>Settings</span>
                 </button>
-                
-                <button 
+
+                <button
                   onClick={handleLogout}
-                  className="flex items-center gap-3 w-full px-3 py-2 rounded-lg text-muted hover:text-red-500 hover:bg-secondary transition-colors"
+                  className="flex items-center gap-3 w-full px-3 py-2 text-muted hover:text-red-500 hover:bg-secondary rounded-lg transition-colors text-sm"
                 >
-                  <LogOut className="size-4" />
+                  <LogOut size={16} />
                   <span>Logout</span>
                 </button>
               </div>
