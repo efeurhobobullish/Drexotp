@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ChevronDown, ChevronUp, Search, Zap, Globe } from "lucide-react";
 import { useState } from "react";
-import { MainLayout } from "@/layouts/main-layout";
+import { MainLayout } from "@/layouts";
 
 export default function Numbers() {
   // Mock data
