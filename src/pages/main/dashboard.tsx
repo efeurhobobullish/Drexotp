@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
-import { Shield, Zap, Clock, Copy, RefreshCw, LogOut, User, Settings } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Shield, Zap, Clock, Copy, RefreshCw, LogOut, Settings } from "lucide-react";
 import ModeToggle from "@/components/ui/mode-toggle";
 import { Pattern } from "@/components/ui";
 
