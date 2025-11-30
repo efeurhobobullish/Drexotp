@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, ArrowDownRight, Wallet } from "lucide-react";
-import { MainLayout } from "@/layouts/main-layout";
+import { MainLayout } from "@/layouts";
 import { Link } from "react-router-dom";
 
 export default function WalletPage() {
