@@ -1,29 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+/* Font - Use optimal loading */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ===================== */
+/*  ROOT COLOR SYSTEM    */
+/* ===================== */
+
 :root {
+  /* Core colors */
   --background: #ffffff;
-  --secondary: #f9f9f9;
   --foreground: #f5f5f5;
-  --main: #444;
-  --muted: #999999;
-  --primary: #222;
-  --line: #f1f1f1;
+  --secondary: #f9f9f9;
+
+  --main: #333333;       /* Slightly darker for readability */
+  --primary: #1f1f1f;    /* Contrast-heavy */
+
+  --muted: #8c8c8c;
+  --line: #e6e6e6;
 }
 
+/* Dark theme */
 .dark {
-  --background: #0a0a0a;
+  --background: #0b0b0b;
   --foreground: #212121;
-  --main: #fefefe;
   --secondary: #121212;
-  --muted: #999999;
-  --line: #212121;
+
+  --main: #fefefe;
   --primary: #fefefe;
+
+  --muted: #a1a1a1;
+  --line: #1e1e1e;
 }
 
+/* ===================== */
+/*  TAILWIND THEME MAP   */
+/* ===================== */
 @theme inline {
   --font-sans: "Plus Jakarta Sans", sans-serif;
   --color-background: var(--background);
@@ -35,13 +49,20 @@
   --color-primary: var(--primary);
 }
 
-*{
-  @apply outline-none
+/* ===================== */
+/*  GLOBAL STYLING       */
+/* ===================== */
+
+* {
+  @apply outline-none;
 }
 
 body {
- @apply bg-background text-main font-sans;
+  @apply bg-background text-main font-sans antialiased;
+  font-feature-settings: "liga", "kern";
 }
+
+/* Containers */
 
 .main {
   @apply max-w-[90%] 2xl:max-w-[1280px] mx-auto;
@@ -51,24 +72,35 @@ body {
   @apply max-w-[90%] md:max-w-[700px] mx-auto;
 }
 
+/* Flex utilities */
+
 .center {
   @apply flex items-center justify-center;
 }
 
+/* ===================== */
+/*  BUTTONS              */
+/* ===================== */
+
 button,
 .btn {
-  @apply cursor-pointer flex items-center justify-center gap-2 disabled:opacity-50;
+  @apply cursor-pointer flex items-center justify-center gap-2 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
 }
 
+/* Default primary button */
 .btn-primary {
-  @apply text-white dark:text-[#171717] bg-primary font-semibold;
+  @apply bg-primary text-white dark:text-[#171717] font-semibold px-4 py-2 rounded-md hover:opacity-90 active:opacity-80;
 }
+
+/* ===================== */
+/*  SCROLLBAR UTILITY    */
+/* ===================== */
 
 .hide-scrollbar::-webkit-scrollbar {
-  @apply hidden;
+  display: none;
 }
 
-.hide-scrollbar::-webkit-scrollbar-thumb {
-  @apply hidden;
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE */
+  scrollbar-width: none; /* Firefox */
 }
-
