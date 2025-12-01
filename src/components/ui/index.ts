@@ -10,4 +10,5 @@ export {default as ModeToggle} from "./mode-toggle";
 export {default as InputCheck} from "./input-check";
 export {default as NonCloseModal} from "./non-close-modal";
 export {default as SlidingMenu} from "./sliding-menu-framer";
+export {default as AvatarUploader} from "./AvatarUploader";
 
