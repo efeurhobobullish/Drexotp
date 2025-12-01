@@ -9,39 +9,31 @@ import { toast } from "sonner";
 import { RefreshCcw } from "lucide-react";
 
 export default function Numbers() {
-  // State
   const [country, setCountry] = useState("");
   const [service, setService] = useState("");
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showPurchased, setShowPurchased] = useState(false);
-  const [otpMessages, setOtpMessages] = useState([
-    { id: 1, service: "WhatsApp", code: "—", time: "No message yet" },
-    { id: 2, service: "Telegram", code: "—", time: "No message yet" },
-  ]);
+  const [otpMessage, setOtpMessage] = useState({
+    service: "",
+    code: "—",
+    time: "No message yet",
+  });
 
-  // Auto-refresh OTP every 7s
+  // Live OTP refresh (every 7s after purchase)
   useEffect(() => {
-    if (showPurchased) {
+    if (showPurchased && service) {
       const interval = setInterval(() => {
-        setOtpMessages([
-          {
-            id: 1,
-            service: "WhatsApp",
-            code: Math.floor(100000 + Math.random() * 900000).toString(),
-            time: "Just now",
-          },
-          {
-            id: 2,
-            service: "Telegram",
-            code: Math.floor(100000 + Math.random() * 900000).toString(),
-            time: "Few seconds ago",
-          },
-        ]);
+        setOtpMessage({
+          service,
+          code: Math.floor(100000 + Math.random() * 900000).toString(),
+          time: "Just now",
+        });
       }, 7000);
+
       return () => clearInterval(interval);
     }
-  }, [showPurchased]);
+  }, [showPurchased, service]);
 
   const handlePurchase = () => {
     if (!country || !service) {
@@ -51,8 +43,14 @@ export default function Numbers() {
     setTimeout(() => {
       setLoading(false);
       setShowModal(false);
+      toast.success(`Number for ${service} purchased successfully!`);
       setShowPurchased(true);
-      toast.success("Number purchased successfully!");
+
+      setOtpMessage({
+        service,
+        code: "—",
+        time: "Waiting for OTP...",
+      });
     }, 1600);
   };
 
@@ -60,11 +58,9 @@ export default function Numbers() {
     <MainLayout>
       <div className="main pb-10 space-y-6">
         <h1 className="text-xl font-space font-bold">Purchase Virtual Number</h1>
-        <p className="text-sm text-muted">
-          Select country and service to continue
-        </p>
+        <p className="text-sm text-muted">Select country and service to continue</p>
 
-        {/* Dropdowns */}
+        {/* Dropdown Fields */}
         <div className="space-y-4">
           <SelectWithoutIcon
             label="Country"
@@ -103,59 +99,46 @@ export default function Numbers() {
           />
         </div>
 
-        {/* OTP Section */}
+        {/* OTP Section (Only selected service) */}
         {showPurchased && (
-          <div className="bg-secondary dark:bg-foreground rounded-xl border border-line p-4 space-y-3">
-            <div className="flex items-center justify-between">
-              <p className="font-space font-semibold text-lg">+234 908 123 4567</p>
-              <button
-                onClick={() => navigator.clipboard.writeText("+2349081234567")}
-                className="text-xs font-medium text-primary hover:underline"
-              >
-                Copy
-              </button>
-            </div>
+          <div className="bg-secondary dark:bg-foreground rounded-xl border border-line p-4 space-y-4">
+            <p className="font-space font-semibold text-lg">+234 908 123 4567</p>
 
-            {otpMessages.map((msg) => (
-              <div key={msg.id} className="rounded-lg bg-background border border-line p-3">
-                <p className="text-sm">
-                  <span className="font-semibold">{msg.service} OTP:</span> {msg.code}
-                </p>
-                <p className="text-xs text-muted">{msg.time}</p>
-              </div>
-            ))}
+            <div className="rounded-lg bg-background border border-line p-3">
+              <p className="text-sm">
+                <span className="font-semibold">{otpMessage.service} OTP:</span>{" "}
+                {otpMessage.code}
+              </p>
+              <p className="text-xs text-muted">{otpMessage.time}</p>
+            </div>
 
             <button
               onClick={() => {
-                toast.info("Refreshing messages…");
-                setOtpMessages((prev) =>
-                  prev.map((m) => ({
-                    ...m,
-                    code: Math.floor(100000 + Math.random() * 900000).toString(),
-                    time: "Just now",
-                  }))
-                );
+                toast.info("Refreshing…");
+                setOtpMessage({
+                  service,
+                  code: Math.floor(100000 + Math.random() * 900000).toString(),
+                  time: "Just now",
+                });
               }}
               className="btn bg-foreground w-full h-11 rounded-lg text-sm flex items-center justify-center gap-2"
             >
               <RefreshCcw size={18} />
-              Refresh Messages
+              Refresh Message
             </button>
           </div>
         )}
 
-        {/* Confirm Purchase Modal */}
+        {/* Confirmation Modal */}
         {showModal && (
           <NonCloseModal isOpen={showModal} title="Confirm Purchase">
             <p className="text-sm text-muted mb-4">
-              You are about to purchase a{" "}
-              <span className="font-medium">{service}</span> virtual number for{" "}
-              <span className="text-main font-medium">{country}</span>.
+              Purchase a virtual number for{" "}
+              <span className="font-medium">{service}</span> ({country})?
             </p>
-            <div className="flex items-center gap-2">
+            <div className="flex gap-2">
               <button
-                type="button"
-                className="btn w-full h-10 rounded-lg font-medium border border-line"
+                className="btn w-full h-10 border border-line rounded-lg"
                 onClick={() => setShowModal(false)}
               >
                 Cancel
