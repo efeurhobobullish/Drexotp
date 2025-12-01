@@ -1,51 +1,51 @@
-import { useState } from "react";
 import { MainLayout } from "@/layouts";
+import { useState } from "react";
+import { CheckCircle, RefreshCcw, ShieldAlert, XCircle } from "lucide-react";
 import { ButtonWithLoader } from "@/components/ui";
 import { toast } from "sonner";
-import { Copy, RefreshCcw, Phone, CheckCircle, XCircle, RotateCcw } from "lucide-react";
 
 interface NumberItem {
   id: number;
-  number: string;
+  phoneNumber: string;
   service: string;
-  otp: string;
-  status: "active" | "expired" | "failed" | "refunded";
-  lastUpdated: string;
+  otp: string | null;
+  status: "successful" | "failed" | "refunded" | "pending";
+  date: string;
 }
 
 export default function MyNumbers() {
   const [numbers, setNumbers] = useState<NumberItem[]>([
     {
       id: 1,
-      number: "+234 908 123 4567",
-      service: "WhatsApp",
-      otp: "483920",
-      status: "active",
-      lastUpdated: "Just now",
+      phoneNumber: "+234 901 234 5678",
+      service: "Telegram",
+      otp: "726318",
+      status: "successful",
+      date: "2024-01-20",
     },
     {
       id: 2,
-      number: "+234 907 777 8888",
-      service: "Telegram",
-      otp: "812345",
-      status: "expired",
-      lastUpdated: "5 hours ago",
+      phoneNumber: "+234 902 345 6789",
+      service: "WhatsApp",
+      otp: null,
+      status: "pending",
+      date: "2024-01-18",
     },
     {
       id: 3,
-      number: "+234 816 234 9090",
-      service: "Google",
-      otp: "—",
+      phoneNumber: "+234 903 456 7890",
+      service: "Twitter",
+      otp: null,
       status: "failed",
-      lastUpdated: "Not received",
+      date: "2024-01-15",
     },
     {
       id: 4,
-      number: "+234 901 555 1010",
-      service: "Facebook",
-      otp: "—",
+      phoneNumber: "+234 904 567 8901",
+      service: "Google",
+      otp: null,
       status: "refunded",
-      lastUpdated: "Refund completed",
+      date: "2024-01-12",
     },
   ]);
 
@@ -54,48 +54,51 @@ export default function MyNumbers() {
   const refreshOtp = (id: number) => {
     setRefreshingId(id);
     setTimeout(() => {
+      // Random example of OTP retrieval
+      const newOtp = Math.random() > 0.5 ? "123456" : null;
+
       setNumbers((prev) =>
         prev.map((item) =>
           item.id === id
             ? {
                 ...item,
-                otp: Math.floor(100000 + Math.random() * 900000).toString(),
-                lastUpdated: "Just now",
-                status: "active",
+                otp: newOtp,
+                status: newOtp ? "successful" : "failed",
               }
             : item
         )
       );
-      toast.success("OTP updated!");
+
+      toast.success(newOtp ? "OTP retrieved successfully!" : "Failed to retrieve OTP");
       setRefreshingId(null);
     }, 1500);
   };
 
   const getStatusColor = (status: NumberItem["status"]) => {
     switch (status) {
-      case "active":
-        return "bg-green-500/20 text-green-600 dark:text-green-400";
-      case "expired":
-        return "bg-amber-500/20 text-amber-600 dark:text-amber-400";
+      case "successful":
+        return "text-green-500";
       case "failed":
-        return "bg-red-500/20 text-red-600 dark:text-red-400";
+        return "text-red-500";
       case "refunded":
-        return "bg-blue-500/20 text-blue-600 dark:text-blue-400";
+        return "text-amber-500";
+      case "pending":
+        return "text-muted";
       default:
-        return "";
+        return "text-muted";
     }
   };
 
-  const StatusIcon = (status: NumberItem["status"]) => {
+  const getStatusIcon = (status: NumberItem["status"]) => {
     switch (status) {
-      case "active":
-        return <CheckCircle size={16} />;
-      case "expired":
-        return <RotateCcw size={16} />;
+      case "successful":
+        return <CheckCircle className="text-green-500" size={20} />;
       case "failed":
-        return <XCircle size={16} />;
+        return <XCircle className="text-red-500" size={20} />;
       case "refunded":
-        return <RotateCcw size={16} />;
+        return <ShieldAlert className="text-amber-500" size={20} />;
+      case "pending":
+        return <RefreshCcw className="text-muted animate-spin" size={20} />;
       default:
         return null;
     }
@@ -103,69 +106,50 @@ export default function MyNumbers() {
 
   return (
     <MainLayout>
-      <div className="main pb-10 space-y-6">
-        <h1 className="text-xl font-space font-bold">My Numbers</h1>
-        <p className="text-sm text-muted">
-          View all purchased virtual numbers and check OTP history.
-        </p>
+      <div className="main pb-6 space-y-6">
+        <div>
+          <h1 className="text-xl font-space font-bold">My Numbers</h1>
+          <p className="text-sm text-muted">
+            Track purchased numbers, OTP delivery, and refresh if needed.
+          </p>
+        </div>
 
         <div className="space-y-4">
           {numbers.map((item) => (
             <div
               key={item.id}
-              className="bg-background dark:bg-secondary rounded-xl border border-line p-4 space-y-3"
+              className="p-4 rounded-xl border border-line bg-background dark:bg-secondary flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
             >
-              {/* Header */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="size-10 bg-primary/10 center rounded-lg text-primary">
-                    <Phone size={18} />
-                  </div>
-                  <div>
-                    <p className="text-sm font-space font-semibold">{item.number}</p>
-                    <p className="text-xs text-muted">{item.service}</p>
-                  </div>
-                </div>
-
-                <div
-                  className={`text-xs px-3 py-1 rounded-full flex items-center gap-1 ${getStatusColor(
-                    item.status
-                  )}`}
-                >
-                  {StatusIcon(item.status)}
-                  {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
-                </div>
+              <div>
+                <p className="font-medium">{item.phoneNumber}</p>
+                <p className="text-xs text-muted">{item.service}</p>
+                <p className="text-xs text-muted">Purchased: {item.date}</p>
               </div>
 
-              {/* OTP Display */}
-              <div className="bg-foreground p-3 rounded-lg">
-                <p className="text-sm">
-                  <span className="font-medium">Latest OTP:</span>{" "}
-                  {item.otp}
-                </p>
-                <p className="text-xs text-muted">{item.lastUpdated}</p>
-              </div>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  {getStatusIcon(item.status)}
+                  <span className={`text-xs font-medium ${getStatusColor(item.status)}`}>
+                    {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                  </span>
+                </div>
 
-              {/* Actions */}
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => navigator.clipboard.writeText(item.number)}
-                  className="btn bg-background border border-line h-10 flex-1 rounded-lg text-sm"
-                >
-                  <Copy size={16} /> Copy
-                </button>
+                {/* OTP Display */}
+                <span className="text-sm font-semibold">
+                  {item.otp ? item.otp : "--"}
+                </span>
 
-                <ButtonWithLoader
-                  loading={refreshingId === item.id}
-                  initialText={
-                    <span className="flex items-center gap-2">
-                      <RefreshCcw size={16} /> Refresh
-                    </span>
-                  }
-                  loadingText="..."
-                  className="btn-primary h-10 flex-1 rounded-lg text-sm"
-                  onClick={() => refreshOtp(item.id)}
-                />
+                {/* FIXED REFRESH BUTTON AREA */}
+                <div className="flex items-center gap-2">
+                  <RefreshCcw size={16} />
+                  <ButtonWithLoader
+                    loading={refreshingId === item.id}
+                    initialText="Refresh"
+                    loadingText="Refreshing..."
+                    className="btn-primary h-9 px-4 rounded-lg text-xs"
+                    onClick={() => refreshOtp(item.id)}
+                  />
+                </div>
               </div>
             </div>
           ))}
