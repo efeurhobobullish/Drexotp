@@ -13,28 +13,23 @@ export default function FundWallet() {
     e.preventDefault();
 
     if (!amount || Number(amount) < 200) {
-      toast.error("Enter a valid amount (Min ₦200)");
-      return;
+      return toast.error("Enter at least ₦200 to fund wallet");
     }
 
     setLoading(true);
 
-    // @ts-ignore - PaystackPop doesn't fully expose internal types
+    // @ts-ignore: Constructor typing limitation
     const paystack = new PaystackPop();
 
     paystack.newTransaction({
       key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || "pk_test_xxxxxx",
-      email: "user@drexotp.com", // Get dynamically from logged user if available
-      amount: Number(amount) * 100, // Paystack expects amount in kobo
+      email: "user@drexotp.com", // 👈 Ideally get from auth context
+      amount: Number(amount) * 100, // Paystack expects kobo
       onSuccess: (transaction: { reference: string }) => {
         toast.success(`₦${Number(amount).toLocaleString()} successfully funded`);
         console.log("Transaction Successful:", transaction.reference);
-
-        // Reset form
         setAmount("");
         setLoading(false);
-
-        // TODO: Call backend API to update wallet with amount
       },
       onCancel: () => {
         toast.warning("Transaction cancelled");
@@ -54,7 +49,7 @@ export default function FundWallet() {
           </p>
         </div>
 
-        {/* Payment Form */}
+        {/* Form Section */}
         <form
           onSubmit={handleFundWallet}
           className="bg-background dark:bg-secondary border border-line rounded-xl p-6 space-y-4"
@@ -68,22 +63,27 @@ export default function FundWallet() {
             className="bg-foreground"
           />
 
-          <ButtonWithLoader
-            loading={loading}
-            initialText={
-              <>
-                <Wallet2 size={18} />
-                Fund Wallet
-              </>
-            }
-            loadingText="Processing..."
-            className="btn-primary w-full h-11 rounded-lg text-sm font-semibold"
-          />
+          {/* Button with external icon (since ButtonWithLoader only accepts string) */}
+          <div className="relative">
+            {!loading && (
+              <Wallet2
+                size={18}
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-white"
+              />
+            )}
+            <ButtonWithLoader
+              loading={loading}
+              initialText="Fund Wallet"
+              loadingText="Processing..."
+              className="btn-primary w-full h-11 rounded-lg text-sm font-semibold pl-10"
+            />
+          </div>
         </form>
 
+        {/* Info Section */}
         <p className="text-xs text-center text-muted">
-          💡 Minimum funding is <span className="font-semibold">₦200</span>.  
-          All payments are securely handled via Paystack.
+          💡 Minimum funding is <span className="font-semibold">₦200</span>.
+          Payments are securely handled via Paystack.
         </p>
       </div>
     </MainLayout>
