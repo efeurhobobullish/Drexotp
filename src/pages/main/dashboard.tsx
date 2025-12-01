@@ -1,4 +1,3 @@
-Anything else to add to this dashboard   
 import { FirstBox } from "@/components/main";  
 import { MainLayout } from "@/layouts";  
   
