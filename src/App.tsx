@@ -11,13 +11,20 @@ export default function App() {
       <ScrollToTop />
       <Toaster position="top-center" richColors />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/"
+element={<Home />} />
+        <Route path="/signup"
+element={<Signup />} />
+        <Route path="/login"
+element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/dashboard" element={<Overview />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/wallet" element={<Wallet />} />
-       <Route path="/numbers" element={<Numbers />} />
+        <Route path="/wallet"
+element={<Wallet />} />
+       <Route path="/numbers"
+element={<Numbers />} />
       </Routes>
     </>
   );
