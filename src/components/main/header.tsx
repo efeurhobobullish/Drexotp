@@ -39,7 +39,7 @@ export default function Header() {
                   Login
                 </Link>
                 <Link
-                  to="/register"
+                  to="/signup"
                   className="btn btn-primary text-sm font-semibold border border-line px-6 py-3 rounded-full"
                 >
                   Register
