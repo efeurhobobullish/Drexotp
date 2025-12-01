@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import {
   Pattern,
   ModeToggle,
@@ -26,18 +25,19 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+
     setTimeout(() => {
       setLoading(false);
       console.log("Login Form:", form);
-      navigate("/dashboard"); // Go to dashboard after login
+      navigate("/dashboard");
     }, 1500);
   };
 
   return (
     <Pattern>
-      {/* Top UI buttons */}
+      {/* Header Controls */}
       <div className="absolute top-4 left-4 z-50">
-        <button onClick={() => navigate(-1)}>
+        <button onClick={() => navigate(-1)} aria-label="Go back">
           <GobackButton />
         </button>
       </div>
@@ -46,23 +46,18 @@ export default function Login() {
         <ModeToggle />
       </div>
 
-      {/* Main content */}
-      <div className="min-h-[100dvh] center">
-        <motion.div
-          className="layout max-w-[400px] w-full space-y-6"
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35 }}
-        >
-          {/* Title */}
-          <div className="text-center space-y-2">
-            <h1 className="text-2xl font-space font-bold">Welcome Back</h1>
+      {/* Main Content */}
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="w-full max-w-[400px] space-y-6">
+          {/* Header Section */}
+          <header className="text-center space-y-2">
+            <h1 className="text-2xl font-instrument font-bold">Welcome Back</h1>
             <p className="text-sm text-muted">
               Continue with DrexOTP — secure virtual numbers.
             </p>
-          </div>
+          </header>
 
-          {/* Form */}
+          {/* Form Section */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <InputWithIcon
               icon={<Mail size={20} />}
@@ -85,30 +80,34 @@ export default function Login() {
             />
 
             {/* Remember Me */}
-            <div className="flex items-center gap-2 text-xs">
+            <div className="flex items-start gap-3 text-sm">
               <InputCheck
                 checked={rememberMe}
                 onChange={() => setRememberMe(!rememberMe)}
+                className="mt-0.5"
               />
-              <span className="text-muted">Remember me</span>
+              <span className="text-muted leading-relaxed">Remember me</span>
             </div>
 
+            {/* Submit Button */}
             <ButtonWithLoader
               loading={loading}
               initialText="Login"
               loadingText="Signing In..."
-              className="btn-primary w-full h-10 rounded-md font-semibold"
+              className="btn-primary w-full h-11 rounded-md font-semibold"
             />
           </form>
 
-          {/* Link */}
-          <p className="text-xs text-muted text-center">
-            Don’t have an account?{" "}
-            <Link to="/signup" className="text-main hover:underline">
-              Sign up
-            </Link>
-          </p>
-        </motion.div>
+          {/* Footer Link */}
+          <footer className="text-center">
+            <p className="text-sm text-muted">
+              Don’t have an account?{" "}
+              <Link to="/signup" className="text-main hover:underline font-medium">
+                Sign up
+              </Link>
+            </p>
+          </footer>
+        </div>
       </div>
     </Pattern>
   );
