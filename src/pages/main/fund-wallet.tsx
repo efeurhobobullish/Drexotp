@@ -2,43 +2,45 @@ import { useState } from "react";
 import { MainLayout } from "@/layouts";
 import { ButtonWithLoader, InputWithoutIcon } from "@/components/ui";
 import { toast } from "sonner";
-import { usePaystackPayment } from "react-paystack";
+import PaystackPop from "@paystack/inline-js";
 import { Wallet2 } from "lucide-react";
 
 export default function FundWallet() {
-  const [amount, setAmount] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [amount, setAmount] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const config = {
-    reference: new Date().getTime().toString(),
-    email: "user@drexotp.com", // Replace with the actual user email
-    amount: Number(amount) * 100, // Paystack expects amount in kobo
-    publicKey: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || "pk_test_xxxxxxxxxxxxx",
-  };
-
-  const initializePayment = usePaystackPayment(config);
-
-  const handlePayment = (e: React.FormEvent) => {
+  const handleFundWallet = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!amount || Number(amount) < 200) {
-      return toast.error("Enter at least ₦200 to fund wallet");
+      toast.error("Enter a valid amount (Min ₦200)");
+      return;
     }
 
     setLoading(true);
 
-    initializePayment(
-      (response) => {
-        console.log("Success:", response);
-        toast.success(`₦${Number(amount).toLocaleString()} funded successfully`);
+    // @ts-ignore - PaystackPop doesn't fully expose internal types
+    const paystack = new PaystackPop();
+
+    paystack.newTransaction({
+      key: import.meta.env.VITE_PAYSTACK_PUBLIC_KEY || "pk_test_xxxxxx",
+      email: "user@drexotp.com", // Get dynamically from logged user if available
+      amount: Number(amount) * 100, // Paystack expects amount in kobo
+      onSuccess: (transaction: { reference: string }) => {
+        toast.success(`₦${Number(amount).toLocaleString()} successfully funded`);
+        console.log("Transaction Successful:", transaction.reference);
+
+        // Reset form
         setAmount("");
         setLoading(false);
+
+        // TODO: Call backend API to update wallet with amount
       },
-      () => {
-        toast.error("Transaction cancelled");
+      onCancel: () => {
+        toast.warning("Transaction cancelled");
         setLoading(false);
-      }
-    );
+      },
+    });
   };
 
   return (
@@ -48,19 +50,19 @@ export default function FundWallet() {
         <div className="space-y-1">
           <h1 className="text-xl font-instrument font-bold">Fund Wallet</h1>
           <p className="text-sm text-muted">
-            Add money to your Drexotp balance using Paystack.
+            Top up your Drexotp balance securely using Paystack.
           </p>
         </div>
 
-        {/* Funding Form */}
+        {/* Payment Form */}
         <form
-          onSubmit={handlePayment}
+          onSubmit={handleFundWallet}
           className="bg-background dark:bg-secondary border border-line rounded-xl p-6 space-y-4"
         >
           <InputWithoutIcon
             type="number"
-            label="Amount (₦)"
-            placeholder="e.g. 2000"
+            label="Enter Amount (₦)"
+            placeholder="e.g 2000"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             className="bg-foreground"
@@ -70,17 +72,18 @@ export default function FundWallet() {
             loading={loading}
             initialText={
               <>
-                <Wallet2 size={18} /> Pay with Paystack
+                <Wallet2 size={18} />
+                Fund Wallet
               </>
             }
             loadingText="Processing..."
-            className="btn-primary text-sm font-semibold h-11 rounded-lg w-full"
+            className="btn-primary w-full h-11 rounded-lg text-sm font-semibold"
           />
         </form>
 
-        {/* Info Text */}
         <p className="text-xs text-center text-muted">
-          Minimum funding is <span className="font-semibold">₦200</span>. All payments are securely processed via Paystack.
+          💡 Minimum funding is <span className="font-semibold">₦200</span>.  
+          All payments are securely handled via Paystack.
         </p>
       </div>
     </MainLayout>
