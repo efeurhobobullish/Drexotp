@@ -1,4 +1,4 @@
-import { CreditCard, HelpCircle, Home, Phone, PhoneCall, Plug, Tv, UserCog2, Wallet, Wifi } from "lucide-react"
+import { PhoneCall, Phone, ShieldCheck, Activity, Wallet, Home, UserCog2, HelpCircle } from "lucide-react";
 
 export const libraries = [
     "React Router",
@@ -12,8 +12,6 @@ export const libraries = [
     "Sonner",
     "Framer Motion",
 ]
-
-import { PhoneCall, Phone, ShieldCheck, Activity, Wallet, Home, UserCog2, HelpCircle } from "lucide-react";
 
 export const heroData = {
   title: "Instant Virtual Numbers for OTPs.",
