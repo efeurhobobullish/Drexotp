@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { MainLayout } from "@/layouts";
-import { InputWithoutIcon, SelectWithoutIcon, ButtonWithLoader, NonCloseModal } from "@/components/ui";
+import { SelectWithoutIcon, ButtonWithLoader } from "@/components/ui";
+import NonCloseModal from "@/components/ui/non-close-modal";
 import { toast } from "sonner";
-import { Phone, Flag } from "lucide-react";
+import { Phone } from "lucide-react";
 
 export default function PurchaseNumber() {
   // Mock data – replace with API results later
