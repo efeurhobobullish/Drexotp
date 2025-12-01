@@ -6,3 +6,4 @@ export { default as Numbers } from "./numbers";
 export { default as Settings } from "./settings";
 export { default as Help } from "./help";
 export { default as FundWallet } from "./fund-wallet";
+export { default as MyNumbers } from "./my-numbers";
