@@ -1,73 +1,105 @@
-import { motion } from "framer-motion";
-import { User, Mail, Edit2, LogOut } from "lucide-react";
-import { MainLayout } from "@/layouts";
+import { MiniLayout } from "@/layouts";
+import {
+  AvatarUploader,
+  ButtonWithLoader,
+  InputWithoutIcon,
+  SelectWithoutIcon,
+} from "@/components/ui";
+import { useState } from "react";
 
 export default function Profile() {
-  // Placeholder data – replace with real user fetch later
-  const user = {
-    fullName: "John Doe",
-    username: "johndoe",
-    email: "john@example.com",
-  };
+  const [avatar, setAvatar] = useState<string | undefined>(
+    "https://api.dicebear.com/9.x/adventurer/svg?seed=EmpireTech"
+  );
 
   return (
-    <MainLayout>
-      <div className="main space-y-8 pb-6">
-        
-        {/* Profile Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="text-center space-y-2"
-        >
-          <div className="w-20 h-20 rounded-full mx-auto bg-primary text-background center font-space text-xl font-bold">
-            {user.fullName.charAt(0).toUpperCase()}
-          </div>
-          <h1 className="text-xl font-space font-bold">{user.fullName}</h1>
-          <p className="text-muted text-sm">@{user.username}</p>
-        </motion.div>
+    <MiniLayout>
+      <section className="bg-background dark:bg-secondary rounded-xl border border-line overflow-hidden">
+        {/* Header band */}
+        <div className="h-28 w-full bg-gradient-to-r from-primary/30 via-primary/10 to-primary/30 dark:from-primary/40 dark:via-primary/20 dark:to-primary/40" />
 
-        {/* User Info */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1, duration: 0.3 }}
-          className="space-y-3"
-        >
-          <div className="flex items-center gap-3 bg-secondary dark:bg-foreground border border-line rounded-xl p-4">
-            <User size={18} className="text-main/60" />
-            <div>
-              <p className="text-xs text-muted">Full Name</p>
-              <p className="text-sm font-medium">{user.fullName}</p>
+        {/* Avatar */}
+        <div className="px-4 sm:px-6 -mt-14">
+          <div className="w-fit mx-auto p-2 rounded-full bg-background dark:bg-foreground border border-line">
+            <AvatarUploader value={avatar} onChange={setAvatar} size={112} />
+          </div>
+        </div>
+
+        {/* Content */}
+        <div className="p-4 sm:p-6 grid grid-cols-1 gap-6">
+          {/* Profile Information Form */}
+          <form
+            className="space-y-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              console.log("Profile updated");
+            }}
+          >
+            <h2 className="text-lg font-instrument font-semibold text-main">
+              Account Details
+            </h2>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <InputWithoutIcon
+                type="text"
+                label="Display Name"
+                placeholder="Empire Tech"
+                className="bg-foreground"
+              />
+              <InputWithoutIcon
+                label="Username"
+                type="text"
+                placeholder="drexemptech"
+                className="bg-foreground"
+              />
+              <InputWithoutIcon
+                label="Email"
+                type="email"
+                placeholder="you@drexotp.com"
+                className="bg-foreground"
+              />
+              <SelectWithoutIcon
+                label="Default Country"
+                options={[
+                  { label: "Nigeria", value: "NG" },
+                  { label: "Ghana", value: "GH" },
+                  { label: "Kenya", value: "KE" },
+                ]}
+                className="bg-foreground"
+              />
             </div>
-          </div>
 
-          <div className="flex items-center gap-3 bg-secondary dark:bg-foreground border border-line rounded-xl p-4">
-            <Mail size={18} className="text-main/60" />
-            <div>
-              <p className="text-xs text-muted">Email</p>
-              <p className="text-sm font-medium">{user.email}</p>
+            {/* Security Section */}
+            <div className="pt-3 space-y-3">
+              <h2 className="text-lg font-instrument font-semibold text-main">
+                Security Settings
+              </h2>
+              <InputWithoutIcon
+                type="password"
+                label="Change Password"
+                placeholder="Enter new password"
+                className="bg-foreground"
+              />
             </div>
-          </div>
-        </motion.div>
 
-        {/* Action Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15, duration: 0.3 }}
-          className="space-y-3 pt-2"
-        >
-          <button className="btn-primary w-full h-10 rounded-md font-semibold">
-            <Edit2 size={16} /> Edit Profile
-          </button>
-
-          <button className="btn bg-secondary text-main border border-line w-full h-10 rounded-md font-semibold hover:bg-secondary/90 transition">
-            <LogOut size={16} /> Logout
-          </button>
-        </motion.div>
-      </div>
-    </MainLayout>
+            {/* Actions */}
+            <div className="flex items-center gap-3 pt-2">
+              <button
+                type="button"
+                className="btn px-4 h-10 flex-1 text-sm font-semibold rounded-lg border border-line"
+              >
+                Cancel
+              </button>
+              <ButtonWithLoader
+                className="btn btn-primary px-5 h-10 flex-1 text-sm rounded-lg"
+                loading={false}
+                initialText="Save changes"
+                loadingText="Saving..."
+              />
+            </div>
+          </form>
+        </div>
+      </section>
+    </MiniLayout>
   );
 }
