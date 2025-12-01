@@ -25,9 +25,10 @@ const SlidingMenu: React.FC<SlidingMenuProps> = ({
   };
 
   const handleLogout = () => {
-    console.log('Logout clicked');
-    onClose();
-  };
+  console.log('Logout clicked');
+  onClose();
+  navigate('/');
+};
 
   return (
     <AnimatePresence>
