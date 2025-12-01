@@ -3,28 +3,27 @@ import { Toaster } from "sonner";
 import { ScrollToTop } from "@/components/ui";
 import { Home } from "@/pages";
 import { Signup, Login, ResetPassword, ForgotPassword } from "@/pages/auth";
-import { Dashboard, Profile, Wallet, Numbers } from "@/pages/main";
+import { Dashboard, Profile, Wallet, Numbers, Transactions } from "@/pages/main";
 
 export default function App() {
   return (
     <>
       <ScrollToTop />
       <Toaster position="top-center" richColors />
+
       <Routes>
-        <Route path="/"
-element={<Home />} />
-        <Route path="/signup"
-element={<Signup />} />
-        <Route path="/login"
-element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/dashboard" element={<Overview />} />
+
+        {/* Corrected and added missing pages */}
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/wallet"
-element={<Wallet />} />
-       <Route path="/numbers"
-element={<Numbers />} />
+        <Route path="/wallet" element={<Wallet />} />
+        <Route path="/numbers" element={<Numbers />} />
+        <Route path="/transactions" element={<Transactions />} /> {/* ← NEW */}
       </Routes>
     </>
   );
