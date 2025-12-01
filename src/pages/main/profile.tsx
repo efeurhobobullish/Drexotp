@@ -9,7 +9,7 @@ import { useState } from "react";
 
 export default function Profile() {
   const [avatar, setAvatar] = useState<string | undefined>(
-    "https://api.dicebear.com/9.x/adventurer/svg?seed=EmpireTech"
+    "https://api.dicebear.com/9.x/adventurer/svg?seed=Felix"
   );
 
   return (
