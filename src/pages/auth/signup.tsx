@@ -1,4 +1,9 @@
-import { Pattern, ModeToggle, GobackButton, InputWithIcon, ButtonWithLoader, InputCheck } from "@/components/ui";
+import {
+  Pattern,
+  InputWithIcon,
+  ButtonWithLoader,
+  InputCheck,
+} from "@/components/ui";
 import { AuthLayout } from "@/layouts";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -33,18 +38,7 @@ export default function Signup() {
   return (
     <Pattern>
       <AuthLayout>
-        {/* Header Controls */}
-        <div className="absolute top-4 left-4 z-50">
-          <button onClick={() => navigate(-1)} aria-label="Go back">
-            <GobackButton />
-          </button>
-        </div>
-
-        <div className="absolute top-4 right-4 z-50">
-          <ModeToggle />
-        </div>
-
-        {/* Main Content */}
+        {/* Main content */}
         <div className="min-h-screen flex items-center justify-center p-4">
           <div className="w-full max-w-[400px] space-y-6">
             {/* Header Section */}
