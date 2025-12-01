@@ -3,7 +3,7 @@ import { Toaster } from "sonner";
 import { ScrollToTop } from "@/components/ui";
 import { Home } from "@/pages";
 import { Signup, Login, ResetPassword, ForgotPassword } from "@/pages/auth";
-import { Dashboard, Profile, Wallet, Numbers, Transactions, Settings } from "@/pages/main";
+import { Dashboard, Profile, Wallet, Numbers, Transactions, Settings, Help } from "@/pages/main";
 
 export default function App() {
   return (
@@ -23,7 +23,8 @@ export default function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/numbers" element={<Numbers />} />
-         <Route path="/security" element={<Settings />} />
+        <Route path="/security" element={<Settings />} />
+        <Route path="/help" element={<Help />} />
         <Route path="/transactions" element={<Transactions />} /> {/* ← NEW */}
       </Routes>
     </>
