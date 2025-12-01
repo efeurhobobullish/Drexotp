@@ -4,9 +4,9 @@ import { Mail, PhoneCall, Send } from "lucide-react";
 export default function Help() {
   return (
     <MainLayout>
-      <div className="main pb-6 space-y-6">
+      <div className="layout pb-8 space-y-8">
         {/* Header */}
-        <div>
+        <div className="space-y-1 pt-2">
           <h1 className="text-xl font-instrument font-bold">Help & Support</h1>
           <p className="text-sm text-muted">
             We're here to assist you with any issue related to Drexotp.
@@ -14,13 +14,13 @@ export default function Help() {
         </div>
 
         {/* Contact Support */}
-        <div className="bg-background dark:bg-secondary border border-line rounded-xl p-5 space-y-3">
-          <h3 className="font-space font-semibold">Contact Support</h3>
+        <div className="bg-background dark:bg-secondary border border-line rounded-xl p-6 space-y-4">
+          <h3 className="font-space font-semibold text-lg">Contact Support</h3>
           <p className="text-sm text-muted">
             Reach out through any of the options below.
           </p>
 
-          <div className="space-y-2">
+          <div className="space-y-3">
             <button className="btn w-full h-11 rounded-lg bg-foreground text-main flex items-center justify-center gap-2">
               <Mail size={20} />
               Email Support
