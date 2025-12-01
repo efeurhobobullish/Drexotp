@@ -14,7 +14,7 @@ interface SlidingMenuProps {
 const SlidingMenu: React.FC<SlidingMenuProps> = ({ 
   isOpen, 
   onClose, 
-  userName = "Gift Jacksun",
+  userName = "Empire Tech",
   userAvatar = "https://api.dicebear.com/9.x/adventurer/svg?seed=Felix"
 }) => {
   const navigate = useNavigate();
@@ -89,7 +89,7 @@ const SlidingMenu: React.FC<SlidingMenuProps> = ({
                 </div>
                 <div>
                   <p className="font-medium">{userName}</p>
-                  <p className="text-sm text-muted">A mere mortal</p>
+                  <p className="text-sm text-muted">A Humble Servant</p>
                 </div>
               </div>
             </motion.div>
