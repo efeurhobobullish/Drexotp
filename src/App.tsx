@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { Toaster } from "sonner";
 import { ScrollToTop } from "@/components/ui";
 import { Home } from "@/pages";
-import { Signup, Login } from "@/pages/auth";
+import { Signup, Login, ResetPassword, ForgotPassword } from "@/pages/auth";
 import { Dashboard, Profile, Wallet, Numbers } from "@/pages/main";
 
 export default function App() {
