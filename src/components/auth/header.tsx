@@ -11,14 +11,14 @@ export default function Header() {
           <Link to="/" className="flex items-center gap-2 ">
             <img src="/logo.svg" alt="Gobills" className="w-10 h-10" />
             <p className="text-2xl font-bold text-shadow-lg">
-              Gobills<span className="text-primary">&bull;</span>
+              Drexotp<span className="text-primary">&bull;</span>
             </p>
           </Link>
 
           <div className="flex items-center md:gap-6 gap-4 ">
             <ModeToggle />
             <a
-              href="https://help.gobills.com"
+              href="/help"
               target="_blank"
               className="flex items-center gap-2"
             >
