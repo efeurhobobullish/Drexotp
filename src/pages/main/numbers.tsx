@@ -5,7 +5,7 @@ import NonCloseModal from "@/components/ui/non-close-modal";
 import { toast } from "sonner";
 import { Phone } from "lucide-react";
 
-export default function PurchaseNumber() {
+export default function Numbers() {
   // Mock data – replace with API results later
   const countries = [
     { label: "Nigeria", value: "NG", flag: "🇳🇬" },
