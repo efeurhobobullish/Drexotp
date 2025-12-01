@@ -34,7 +34,7 @@ export default function Hero() {
         <div className="md:mt-auto mt-6">
           <div className="flex items-center gap-4">
             <Link
-              to="/register"
+              to="/signup"
               className="btn bg-primary text-white border border-primary rounded-xl w-fit px-6 py-3 md:py-4 md:text-base text-sm font-medium"
             >
               Get Started
