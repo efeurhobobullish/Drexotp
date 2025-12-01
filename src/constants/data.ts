@@ -77,7 +77,7 @@ export const navlinks = [
   },
   {
     title: "Help",
-    href: "/settings",
+    href: "/help",
     icon: HelpCircle,
   },
 ];
