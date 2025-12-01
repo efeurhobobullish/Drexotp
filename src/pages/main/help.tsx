@@ -26,33 +26,6 @@ export default function Help() {
             Start Chat
           </button>
         </div>
-
-        {/* FAQ */}
-        <div className="bg-background dark:bg-secondary border border-line rounded-xl p-5 space-y-4">
-          <h3 className="font-space font-semibold">Quick Help</h3>
-
-          <div className="space-y-3">
-            <div className="p-3 rounded-lg bg-secondary/50 dark:bg-foreground/40">
-              <p className="text-sm font-medium">How do I purchase a virtual number?</p>
-              <p className="text-xs text-muted">
-                Go to Numbers → Select Country & Service → Click "Purchase".
-              </p>
-            </div>
-
-            <div className="p-3 rounded-lg bg-secondary/50 dark:bg-foreground/40">
-              <p className="text-sm font-medium">Is the number temporary or permanent?</p>
-              <p className="text-xs text-muted">
-                Most are session-based. Contact support for custom long-term numbers.
-              </p>
-            </div>
-
-            <div className="p-3 rounded-lg bg-secondary/50 dark:bg-foreground/40">
-              <p className="text-sm font-medium">What if OTP delay occurs?</p>
-              <p className="text-xs text-muted">
-                Retry after 30 seconds. If not received within 2 minutes, contact support.
-              </p>
-            </div>
-          </div>
         </div>
 
         {/* Contact Support */}
