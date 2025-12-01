@@ -8,7 +8,6 @@ export default function Dashboard() {
         <div className="grid lg:grid-cols-3 sm:grid-cols-1 md:gap-4 gap-10 my-6 md:my-10">
           <FirstBox />
           <div className="lg:col-span-2">
-            <SecondBox />
           </div>
         </div>
       </MainLayout>
