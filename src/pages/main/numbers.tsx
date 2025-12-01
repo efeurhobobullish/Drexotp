@@ -1,10 +1,15 @@
 import { useState, useEffect } from "react";
 import { MainLayout } from "@/layouts";
-import { InputWithoutIcon, ButtonWithLoader, NonCloseModal } from "@/components/ui";
+import {
+  SelectWithoutIcon,
+  ButtonWithLoader,
+  NonCloseModal,
+} from "@/components/ui";
 import { toast } from "sonner";
-import { Phone, Flag, RefreshCcw } from "lucide-react";
+import { RefreshCcw } from "lucide-react";
 
 export default function Numbers() {
+  // State
   const [country, setCountry] = useState("");
   const [service, setService] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,7 +20,7 @@ export default function Numbers() {
     { id: 2, service: "Telegram", code: "—", time: "No message yet" },
   ]);
 
-  // Fake refresh logic (auto refresh every 7s after purchase)
+  // Auto-refresh OTP every 7s
   useEffect(() => {
     if (showPurchased) {
       const interval = setInterval(() => {
@@ -40,8 +45,7 @@ export default function Numbers() {
 
   const handlePurchase = () => {
     if (!country || !service) {
-      toast.warning("Select country and service");
-      return;
+      return toast.warning("Select country and service first");
     }
     setLoading(true);
     setTimeout(() => {
@@ -56,23 +60,38 @@ export default function Numbers() {
     <MainLayout>
       <div className="main pb-10 space-y-6">
         <h1 className="text-xl font-space font-bold">Purchase Virtual Number</h1>
-        <p className="text-sm text-muted">Select country and service to continue</p>
+        <p className="text-sm text-muted">
+          Select country and service to continue
+        </p>
 
+        {/* Dropdowns */}
         <div className="space-y-4">
-          <InputWithoutIcon
+          <SelectWithoutIcon
             label="Country"
-            placeholder="e.g Nigeria"
             className="bg-foreground"
             value={country}
             onChange={(e) => setCountry(e.target.value)}
+            options={[
+              { label: "🇳🇬 Nigeria", value: "Nigeria" },
+              { label: "🇬🇭 Ghana", value: "Ghana" },
+              { label: "🇰🇪 Kenya", value: "Kenya" },
+              { label: "🇺🇸 USA", value: "USA" },
+              { label: "🇬🇧 UK", value: "UK" },
+            ]}
           />
 
-          <InputWithoutIcon
+          <SelectWithoutIcon
             label="Service"
-            placeholder="e.g WhatsApp"
             className="bg-foreground"
             value={service}
             onChange={(e) => setService(e.target.value)}
+            options={[
+              { label: "WhatsApp", value: "WhatsApp" },
+              { label: "Telegram", value: "Telegram" },
+              { label: "Facebook", value: "Facebook" },
+              { label: "Google", value: "Google" },
+              { label: "Instagram", value: "Instagram" },
+            ]}
           />
 
           <ButtonWithLoader
@@ -84,7 +103,7 @@ export default function Numbers() {
           />
         </div>
 
-        {/* After Purchase: Show Live Updating Demo */}
+        {/* OTP Section */}
         {showPurchased && (
           <div className="bg-secondary dark:bg-foreground rounded-xl border border-line p-4 space-y-3">
             <div className="flex items-center justify-between">
@@ -109,20 +128,13 @@ export default function Numbers() {
             <button
               onClick={() => {
                 toast.info("Refreshing messages…");
-                setOtpMessages([
-                  {
-                    id: 1,
-                    service: "WhatsApp",
+                setOtpMessages((prev) =>
+                  prev.map((m) => ({
+                    ...m,
                     code: Math.floor(100000 + Math.random() * 900000).toString(),
                     time: "Just now",
-                  },
-                  {
-                    id: 2,
-                    service: "Telegram",
-                    code: Math.floor(100000 + Math.random() * 900000).toString(),
-                    time: "Just now",
-                  },
-                ]);
+                  }))
+                );
               }}
               className="btn bg-foreground w-full h-11 rounded-lg text-sm flex items-center justify-center gap-2"
             >
@@ -132,15 +144,17 @@ export default function Numbers() {
           </div>
         )}
 
-        {/* Confirm Modal */}
+        {/* Confirm Purchase Modal */}
         {showModal && (
           <NonCloseModal isOpen={showModal} title="Confirm Purchase">
             <p className="text-sm text-muted mb-4">
-              You're about to purchase a virtual number for{" "}
-              <span className="text-main font-medium">{service}</span> ({country}).
+              You are about to purchase a{" "}
+              <span className="font-medium">{service}</span> virtual number for{" "}
+              <span className="text-main font-medium">{country}</span>.
             </p>
             <div className="flex items-center gap-2">
               <button
+                type="button"
                 className="btn w-full h-10 rounded-lg font-medium border border-line"
                 onClick={() => setShowModal(false)}
               >
