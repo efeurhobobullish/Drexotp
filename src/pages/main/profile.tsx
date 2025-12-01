@@ -3,14 +3,26 @@ import {
   AvatarUploader,
   ButtonWithLoader,
   InputWithoutIcon,
-  SelectWithoutIcon,
 } from "@/components/ui";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function Profile() {
   const [avatar, setAvatar] = useState<string | undefined>(
     "https://api.dicebear.com/9.x/adventurer/svg?seed=Felix"
   );
+
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+      toast.success("Profile updated successfully!");
+    }, 1000);
+  };
 
   return (
     <MiniLayout>
@@ -28,13 +40,7 @@ export default function Profile() {
         {/* Content */}
         <div className="p-4 sm:p-6 grid grid-cols-1 gap-6">
           {/* Profile Information Form */}
-          <form
-            className="space-y-4"
-            onSubmit={(e) => {
-              e.preventDefault();
-              console.log("Profile updated");
-            }}
-          >
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <h2 className="text-lg font-instrument font-semibold text-main">
               Account Details
             </h2>
@@ -58,28 +64,6 @@ export default function Profile() {
                 placeholder="you@drexotp.com"
                 className="bg-foreground"
               />
-              <SelectWithoutIcon
-                label="Default Country"
-                options={[
-                  { label: "Nigeria", value: "NG" },
-                  { label: "Ghana", value: "GH" },
-                  { label: "Kenya", value: "KE" },
-                ]}
-                className="bg-foreground"
-              />
-            </div>
-
-            {/* Security Section */}
-            <div className="pt-3 space-y-3">
-              <h2 className="text-lg font-instrument font-semibold text-main">
-                Security Settings
-              </h2>
-              <InputWithoutIcon
-                type="password"
-                label="Change Password"
-                placeholder="Enter new password"
-                className="bg-foreground"
-              />
             </div>
 
             {/* Actions */}
@@ -92,7 +76,7 @@ export default function Profile() {
               </button>
               <ButtonWithLoader
                 className="btn btn-primary px-5 h-10 flex-1 text-sm rounded-lg"
-                loading={false}
+                loading={loading}
                 initialText="Save changes"
                 loadingText="Saving..."
               />
