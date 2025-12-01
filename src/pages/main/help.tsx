@@ -74,7 +74,7 @@ export default function Help() {
             </button>
 
             <button
-              onClick={() => window.open("https://t.me/EmpireTechSupport", "_blank")}
+              onClick={() => window.open("https://t.me/only_one_empire", "_blank")}
               className="btn w-full h-11 rounded-lg bg-foreground text-main flex items-center justify-center gap-2"
             >
               <Send size={20} />
