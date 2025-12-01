@@ -1,6 +1,6 @@
 import { ButtonWithLoader, InputWithIcon } from "@/components/ui";
 import { AuthLayout } from "@/layouts";
-import { Lock, Mail, Phone, UserRound } from "lucide-react";
+import { Lock, Mail, UserRound, Signature } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -8,9 +8,9 @@ export default function Signup() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
+    fullName: "",
     username: "",
     email: "",
-    phone: "",
     password: "",
   });
 
@@ -22,11 +22,11 @@ export default function Signup() {
     e.preventDefault();
     setLoading(true);
 
-    // Simulate registration request
+    // Simulate API registration
     setTimeout(() => {
       setLoading(false);
       console.log("Signup Form Submitted:", form);
-      navigate("/login"); // Redirect after registration
+      navigate("/dashboard"); // Redirect user
     }, 1500);
   };
 
@@ -44,9 +44,21 @@ export default function Signup() {
 
       {/* Form */}
       <form
-        className="space-y-4 bg-background dark:bg-secondary p-6 border-2 border-line rounded-xl my-10"
         onSubmit={handleSubmit}
+        className="space-y-4 bg-background dark:bg-secondary p-6 border-2 border-line rounded-xl my-10"
       >
+        <InputWithIcon
+          icon={<Signature size={20} />}
+          label="Full Name"
+          type="text"
+          name="fullName"
+          value={form.fullName}
+          onChange={handleChange}
+          required
+          className="bg-foreground"
+          placeholder="e.g. Empire Tech"
+        />
+
         <InputWithIcon
           icon={<UserRound size={20} />}
           label="Username"
@@ -56,7 +68,7 @@ export default function Signup() {
           onChange={handleChange}
           required
           className="bg-foreground"
-          placeholder="e.g John Doe or Scorpion"
+          placeholder="e.g. empire_dev"
         />
 
         <InputWithIcon
@@ -68,19 +80,7 @@ export default function Signup() {
           onChange={handleChange}
           required
           className="bg-foreground"
-          placeholder="e.g johndoe@example.com"
-        />
-
-        <InputWithIcon
-          icon={<Phone size={20} />}
-          label="Phone Number"
-          type="tel"
-          name="phone"
-          value={form.phone}
-          onChange={handleChange}
-          required
-          className="bg-foreground"
-          placeholder="11-digit"
+          placeholder="e.g. empire@example.com"
         />
 
         <InputWithIcon
